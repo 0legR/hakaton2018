@@ -19,15 +19,18 @@ class UserController extends Controller
     }
 
     public function loggin(Request $request) {
-    	$user = User::byEmail($request->email)->first();
-    	if ($user->isHR()) {
-    		$user['isHR'] = true;
-    	} else if($user->isUser()) {
-    		$user['isUser'] = true;
-    	} else {
-    		return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
-    	}
-    	return response()->json(['user' => $user, 'status' => 200]);
+        if($request->all()) {
+        	$user = User::byEmail($request->email)->first();
+        	if ($user->isHR()) {
+        		$user['isHR'] = true;
+        	} else if($user->isUser()) {
+        		$user['isUser'] = true;
+        	} else {
+        		return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
+        	}
+        	return response()->json(['user' => $user, 'status' => 200]);
+        }
+        return response()->json(['error' => User::RESPONSE_EMPTY, 'status' => 204]);
     }
 
 }

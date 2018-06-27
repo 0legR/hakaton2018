@@ -98,10 +98,29 @@
             $("button").click(function(){
                     var data = {
                         userId:5,
-                        name:'fotographer1',
-                        status:1
+                        name:'what is photographer',
+                        vacancy_id: '4',
+                        status:1,
+                        answers: [
+                            {
+                                name: 'animal', 
+                                status: 0,
+                            },
+                            {
+                                name: 'thing', 
+                                status: 0,
+                            },
+                            {
+                                name: 'persone', 
+                                status: 1,
+                            },
+                            {
+                                name: 'vechicle', 
+                                status: 0,
+                            },
+                        ]
                     };
-                    var url = 'vacancies/4';
+                    // var url = 'vacancies/4';
                     // var data = {
                     //     userId:5,
                     //     name:'fotographer',
@@ -116,26 +135,26 @@
                     //     role: 2
                     // };
                     // var url = 'auth';
-                    
+                    var url = 'questions';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
-                    // $.post(baseUrl,
-                    // data,
-                    // function(data,status){
-                    //     console.log(data);
-                    // });
-                    $.ajax({
-                        url: baseUrl,
-                        // method: 'PUT',
-                        method: 'DELETE',
-                        data: data,
-                        success: function(result) {
-                            console.log(result);
-                        },
-                        error: function(request,msg,error) {
-                            // handle failure
-                        }
+                    $.post(baseUrl,
+                    data,
+                    function(data,status){
+                        console.log(data);
                     });
+                    // $.ajax({
+                    //     url: baseUrl,
+                        // method: 'PUT',
+                        // method: 'DELETE',
+                        // data: data,
+                        // success: function(result) {
+                        //     console.log(result);
+                        // },
+                        // error: function(request,msg,error) {
+                            // handle failure
+                    //     }
+                    // });
                 });
             });
 

@@ -72,3 +72,41 @@ var id = 4;
 var url = 'vacancies/'+id;
 baseUrl = 'http://php_server.ua/api/' + url;
 return json status;
+
+#--------Questions-----------------
+#--------index-------------------
+url = 'questions';
+baseUrl = 'http://php_server.ua/api/' + url;
+method = 'get';
+data = {
+	userId: 5,
+	vacancy_id: 4,
+};
+return json {
+    questions(byVacancy): {
+
+    },
+    vacancies(all): {
+
+    }
+}
+or
+data = {
+	userId: 5,
+};
+
+return json {
+    questions(all): {
+
+    },
+    vacancies(all): {
+
+    }
+};
+
+
+
+
+
+
+
