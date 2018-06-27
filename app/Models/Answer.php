@@ -46,4 +46,8 @@ class Answer extends Model
             $this->errorMessages = $validator->messages();                   
         return $validator->passes();
     }
+
+    public function question(){
+        return $this->belongsTo('App\Models\Question'); 
+    }
 }

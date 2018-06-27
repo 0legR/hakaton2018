@@ -98,28 +98,36 @@
             $("button").click(function(){
                     var data = {
                         userId:5,
-                        name:'what is photographer',
-                        vacancy_id: '4',
-                        status:1,
-                        answers: [
-                            {
-                                name: 'animal', 
-                                status: 0,
-                            },
-                            {
-                                name: 'thing', 
-                                status: 0,
-                            },
-                            {
-                                name: 'persone', 
-                                status: 1,
-                            },
-                            {
-                                name: 'vechicle', 
-                                status: 0,
-                            },
-                        ]
                     };
+                    
+                    // var data = {
+                    //     userId:5,
+                    //     name:'what is photographer',
+                    //     vacancy_id: '4',
+                    //     status:1,
+                    //     answers: [
+                    //         {
+                    //             name: 'animalOPA', 
+                    //             status: 1,
+                    //             id: 1,
+                    //         },
+                    //         {
+                    //             name: 'thing', 
+                    //             status: 0,
+                    //             id: 2,
+                    //         },
+                    //         {
+                    //             name: 'persone', 
+                    //             status: 0,
+                    //             id: 3,
+                    //         },
+                    //         {
+                    //             name: 'vechicle', 
+                    //             status: 0,
+                    //             id: 4,
+                    //         },
+                    //     ]
+                    // };
                     // var url = 'vacancies/4';
                     // var data = {
                     //     userId:5,
@@ -135,26 +143,27 @@
                     //     role: 2
                     // };
                     // var url = 'auth';
-                    var url = 'questions';
+                    var id = 21;
+                    var url = 'questions/' + id;
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
-                    $.post(baseUrl,
-                    data,
-                    function(data,status){
-                        console.log(data);
-                    });
-                    // $.ajax({
-                    //     url: baseUrl,
-                        // method: 'PUT',
-                        // method: 'DELETE',
-                        // data: data,
-                        // success: function(result) {
-                        //     console.log(result);
-                        // },
-                        // error: function(request,msg,error) {
-                            // handle failure
-                    //     }
+                    // $.post(baseUrl,
+                    // data,
+                    // function(data,status){
+                    //     console.log(data);
                     // });
+                    $.ajax({
+                        url: baseUrl,
+                        // method: 'PUT',
+                        method: 'DELETE',
+                        data: data,
+                        success: function(result) {
+                            console.log(result);
+                        },
+                        error: function(request,msg,error) {
+                            // handle failure
+                        }
+                    });
                 });
             });
 

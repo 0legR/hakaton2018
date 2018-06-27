@@ -58,7 +58,7 @@ var data = {
     name:'fotographer-todo',
     status:0
 };
-method: 'PUT';
+method = 'PUT';
 var id = 4;
 var url = 'vacancies/'+id;
 baseUrl = 'http://php_server.ua/api/' + url;
@@ -103,7 +103,82 @@ return json {
 
     }
 };
+#----------store-----------------------
 
+url = 'questions';
+baseUrl = 'http://php_server.ua/api/' + url;
+method = 'post';
+var data = {
+    userId:5,
+    name:'what is photographer',
+    vacancy_id: '4',
+    status:1,
+    answers: [
+        {
+            name: 'animal', 
+            status: 0,
+        },
+        {
+            name: 'thing', 
+            status: 0,
+        },
+        {
+            name: 'persone', 
+            status: 1,
+        },
+        {
+            name: 'vechicle', 
+            status: 0,
+        },
+    ]
+};
+
+return json status;
+#---------update----------------------------
+var id = 21;
+var url = 'questions/' + id;
+baseUrl = 'http://php_server.ua/api/' + url;
+method = 'PUT';
+var data = {
+    userId:5,
+    name:'what is photographer',
+    vacancy_id: '4',
+    status:1,
+    answers: [
+        {
+            name: 'animalOPA', 
+            status: 1,
+            id: 1,
+        },
+        {
+            name: 'thing', 
+            status: 0,
+            id: 2,
+        },
+        {
+            name: 'persone', 
+            status: 0,
+            id: 3,
+        },
+        {
+            name: 'vechicle', 
+            status: 0,
+            id: 4,
+        },
+    ]
+};
+
+return json status;
+
+#----------destroy------------------------------
+var data = {
+    userId:5,
+};
+var id = 21;
+var url = 'questions/' + id;
+var baseUrl = 'http://php_server.ua/api/' + url;
+method = 'DELETE';
+return json status;
 
 
 

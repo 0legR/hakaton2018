@@ -43,15 +43,6 @@ class QuestionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,9 +64,8 @@ class QuestionController extends Controller
             } else {
                 return response()->json(['error' => strval($newQuestion->errorMessages), 'status' => 418]);
             }
-        } else {
-            return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
         }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
     }
 
     public function storeAnswer($answers, $question_id) {
@@ -89,30 +79,28 @@ class QuestionController extends Controller
                     return strval($newAnswer->errorMessages);
                 }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function updateAnswer($answers, $dbAnswers) {
+        if(count($answers) > 0) {
+            foreach ($answers as $data) {
+                foreach ($dbAnswers as $answer) {
+                    if($answer->id === (int)$data['id']) {
+                        $answer->fill($data);
+                        if ($answer->validate()) {
+                            $answer->save();
+                        } else {
+                            return strval($answer->errorMessages);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -124,7 +112,24 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->userId);
+        if ($user->isHR()) {
+            $question = Question::findOrFail($id);
+            $question->fill($request->only('vacancy_id', 'name', 'status'));
+            if ($question->validate()) {
+                $question->save();
+                $answer = $this->updateAnswer($request->answers, $question->answers);
+                if ($answer) {
+                    return response()->json(['success' => Question::RESPONSE_SUCCESS, 'status' => 201]);
+                } else {
+                    return response()->json(['error' => $answer, 'status' => 418]);    
+                } 
+                return response()->json(['success' => Question::RESPONSE_SUCCESS, 'status' => 201]);
+            } else {
+                return response()->json(['error' => strval($question->errorMessages), 'status' => 418]);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
     }
 
     /**
@@ -133,8 +138,18 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->userId);
+        if ($user->isHR()) {
+            $question = Question::findOrFail($id);
+            $question->answers()->delete();
+            if (Question::destroy($id)) {
+                return response()->json(['success' => Question::RESPONSE_DESTROY, 'status' => 201]);
+            } else {
+                return response()->json(['error' => Question::RESPONSE_UNDESTROY, 'status' => 418]);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
     }
 }
