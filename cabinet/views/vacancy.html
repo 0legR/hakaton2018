@@ -23,7 +23,7 @@
                         <tbody>
                         <tr class="odd gradeX" ng-repeat="item in vacancies track by $index">
                             <td>{{item.name}}</td>
-                            <td><a href="{{data.user.role=='quest' ? '#login' : '#dashboard/test'}}">Пройти тест</a></td>
+                            <td><a href="{{!data.user.role ? '#login' : '#dashboard/test'}}">Пройти тест</a></td>
                         </tr>
                         </tbody>
                     </table>

@@ -154,6 +154,10 @@ angular
                 url: '/grid'
             })
 
+            .state('registration', {
+                templateUrl: 'views/registration.html',
+                url: '/registration'
+            })
             .state('dashboard.vacancy', {
                 templateUrl: 'views/vacancy.html',
                 url: '/vacancy'
