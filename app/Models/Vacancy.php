@@ -52,4 +52,9 @@ class Vacancy extends Model
     {
         return $this->hasMany('App\Models\Vacancy');
     }
+
+    public function results()
+    {
+        return $this->hasMany('App\Models\Result');
+    }
 }

@@ -48,4 +48,19 @@ class Result extends Model
     public function scopeByUserId($query, $id) {
         return $query->where('user_id', $id);
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function vacancy()
+    {
+        return $this->belongsTo('App\Models\Vacancy');
+    }
+
+    public function answer()
+    {
+        return $this->belongsTo('App\Models\Answer');
+    }
 }

@@ -98,39 +98,39 @@
             $("button").click(function(){
 
                     var data = {
-                        question_id: 22,
-                        vacancy_id: 2,
+                        question_id: 33,
+                        vacancy_id: 1,
                         user_id: 1,
-                        answer_id: 1
+                        answer_id: 52
                     };
                     // var data = {
                     //     userId:5,
                     // };
                     
                     // var data = {
-                    //     userId:5,
-                    //     name:'who is a builder',
-                    //     vacancy_id: '1',
+                    //     user_id:5,
+                    //     name:'what is a css',
+                    //     vacancy_id: 1,
                     //     status:1,
                     //     answers: [
                     //         {
-                    //             name: 'shure', 
-                    //             status: 1,
+                    //             name: 'planguage', 
+                    //             status: 0,
                     //             // id: 1,
                     //         },
                     //         {
-                    //             name: 'noway', 
+                    //             name: 'humanLanguage', 
                     //             status: 0,
                     //             // id: 2,
                     //         },
                     //         {
-                    //             name: 'never', 
+                    //             name: 'book', 
                     //             status: 0,
                     //             // id: 3,
                     //         },
                     //         {
-                    //             name: 'i would like', 
-                    //             status: 0,
+                    //             name: 'technique', 
+                    //             status: 1,
                     //             // id: 4,
                     //         },
                     //     ]

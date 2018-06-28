@@ -192,7 +192,61 @@ method = 'post';
 var url = 'results';
 var baseUrl = 'http://php_server.ua/api/' + url;
 return json status;
+#-----------index-from user- all of his tests--------------------
 
+data = {
+    user_id: 1
+}
+method = 'get';
+var url = 'results';
+var baseUrl = 'http://php_server.ua/api/' + url;
+return json {
+    results: [
+            'vacancy' => $vacancy,
+            'user' => $user,
+            'result' => $persentageResult,
+            ],
+            [
+                'vacancy' => $vacancy,
+                'user' => $user,
+                'result' => $persentageResult,
+            ]
+};
 
+#-----------index from user by vacancy id after the end of the test
+
+data = {
+    user_id: 1,
+    vacancy_id: 6,
+}
+method = 'get';
+var url = 'results';
+var baseUrl = 'http://php_server.ua/api/' + url;
+return json {
+    results: {
+            'vacancy' => $vacancy,
+            'user' => $user,
+            'result' => $persentageResult,
+    }
+};
+
+#------------index from hr -------
+data = {
+    user_id: 1
+}
+method = 'get';
+var url = 'results';
+var baseUrl = 'http://php_server.ua/api/' + url;
+
+return json {result:[[{vacancy: {id: 6, name: "fotographer", status: 1,…},…},…]]
+0:[{vacancy: {id: 6, name: "fotographer", status: 1,…},…},…]
+0:{vacancy: {id: 6, name: "fotographer", status: 1,…},…}
+result:16.666666666666668
+user:{id: 1, name: "0leg", phone: "8(342)23412342", email: "qwert@gmail.com", role: 1}
+vacancy:{id: 6, name: "fotographer", status: 1,…}
+1:{vacancy: {id: 1, name: "developer", status: 1,…},…}
+result:20
+user:{id: 1, name: "0leg", phone: "8(342)23412342", email: "qwert@gmail.com", role: 1}
+vacancy:{id: 1, name: "developer", status: 1,…}}
 
 

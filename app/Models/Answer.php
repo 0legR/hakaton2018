@@ -32,7 +32,7 @@ class Answer extends Model
 		'created_at', 'updated_at',
     ];
 
-    public function scopeByActive($query, $active) {
+    public function scopeByTruth($query, $active) {
         return $query->where('status', $active);
     }
 
