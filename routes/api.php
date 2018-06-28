@@ -21,5 +21,6 @@ Route::post('auth', 'API\UserController@store');
 Route::get('loggin', 'API\UserController@loggin');
 Route::resource('vacancies', 'API\VacancyController', ['only' => ['index', 'store', 'update', 'destroy']]);
 Route::resource('questions', 'API\QuestionController', ['only' => ['index', 'store', 'update', 'destroy']]);
+Route::resource('results', 'API\ResultController', ['only' => ['index', 'store']]);
 
 

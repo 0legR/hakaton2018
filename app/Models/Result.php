@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
 
-class Question extends Model
+class Result extends Model
 {
-    const STATUS_ACTIVE = true;
     const RESPONSE_EMPTY = 'No Content';
     const RESPONSE_SUCCESS = 'Saved succesfull';
     const RESPONSE_DESTROY = 'Destroyed succesfull';
@@ -15,9 +14,10 @@ class Question extends Model
 
     private $rules = [
         'id' => 'integer',
+        'question_id' => 'integer', 
+        'user_id' => 'integer', 
+        'answer_id' => 'integer',
         'vacancy_id' => 'integer',
-        'name' => 'max:190', 
-        'status' => 'boolean',
     ];
 
     /**
@@ -26,7 +26,7 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'status', 'vacancy_id',
+        'question_id', 'user_id', 'answer_id', 'vacancy_id',
     ];
 
     /**
@@ -38,14 +38,6 @@ class Question extends Model
 		'created_at', 'updated_at',
     ];
 
-    public function scopeByActive($query, $active) {
-        return $query->where('status', $active);
-    }
-
-    public function scopeByVacancy($query, $vacancy_id) {
-        return $query->where('vacancy_id', $vacancy_id);
-    }
-
     public function validate(){
         $validator = Validator::make($this->attributes, $this->rules);
         if ($validator->fails())
@@ -53,13 +45,7 @@ class Question extends Model
         return $validator->passes();
     }
 
-    public function answers()
-    {
-        return $this->hasMany('App\Models\Answer');
-    }
-
-    public function results()
-    {
-        return $this->hasMany('App\Models\Result');
+    public function scopeByUserId($query, $id) {
+        return $query->where('user_id', $id);
     }
 }

@@ -19,7 +19,7 @@ class QuestionController extends Controller
     public function index(Request $request)
     {
         if($request->all()) {
-            $user = User::findOrFail($request->userId);
+            $user = User::findOrFail($request->user_id);
             if ($user->isHR()) {
                 if ($request->vacancy_id) {
                     $questions = Question::byVacancy($request->vacancy_id)->get();
@@ -50,7 +50,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->userId);
+        $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
             $newQuestion = new Question($request->only('vacancy_id', 'name', 'status'));
             if ($newQuestion->validate()) {
@@ -112,7 +112,7 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($request->userId);
+        $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
             $question = Question::findOrFail($id);
             $question->fill($request->only('vacancy_id', 'name', 'status'));
@@ -140,7 +140,7 @@ class QuestionController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $user = User::findOrFail($request->userId);
+        $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
             $question = Question::findOrFail($id);
             $question->answers()->delete();
