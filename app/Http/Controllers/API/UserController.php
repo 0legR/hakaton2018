@@ -12,9 +12,9 @@ class UserController extends Controller
     	$newUser = new User($request->except('_token'));
     	if ($newUser->validate()) {
     		$newUser->save();
-    		return response()->json(['success' => User::RESPONSE_SUCCESS, 'status' => 201]);
+    		return response()->json(['success' => User::RESPONSE_SUCCESS], 201);
     	} else {
-    		return response()->json(['error' => strval($newUser->errorMessages), 'status' => 418]);
+    		return response()->json(['error' => strval($newUser->errorMessages)], 418);
     	}
     }
 
@@ -30,7 +30,7 @@ class UserController extends Controller
         	}
         	return response()->json(['user' => $user, 'status' => 200]);
         }
-        return response()->json(['error' => User::RESPONSE_EMPTY, 'status' => 204]);
+        return response()->json(['error' => User::RESPONSE_EMPTY], 204);
     }
 
 }

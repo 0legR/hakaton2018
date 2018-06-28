@@ -57,4 +57,9 @@ class Question extends Model
     {
         return $this->hasMany('App\Models\Answer');
     }
+
+    public function results()
+    {
+        return $this->hasMany('App\Models\Result');
+    }
 }

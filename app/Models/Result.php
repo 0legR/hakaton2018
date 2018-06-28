@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
 
-class Vacancy extends Model
+class Result extends Model
 {
-    const STATUS_ACTIVE = true;
     const RESPONSE_EMPTY = 'No Content';
     const RESPONSE_SUCCESS = 'Saved succesfull';
     const RESPONSE_DESTROY = 'Destroyed succesfull';
@@ -15,8 +14,10 @@ class Vacancy extends Model
 
     private $rules = [
         'id' => 'integer',
-        'name' => 'max:70', 
-        'status' => 'boolean',
+        'question_id' => 'integer', 
+        'user_id' => 'integer', 
+        'answer_id' => 'integer',
+        'vacancy_id' => 'integer',
     ];
 
     /**
@@ -25,7 +26,7 @@ class Vacancy extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'status',
+        'question_id', 'user_id', 'answer_id', 'vacancy_id',
     ];
 
     /**
@@ -37,10 +38,6 @@ class Vacancy extends Model
 		'created_at', 'updated_at',
     ];
 
-    public function scopeByActive($query, $active) {
-        return $query->where('status', $active);
-    }
-
     public function validate(){
         $validator = Validator::make($this->attributes, $this->rules);
         if ($validator->fails())
@@ -48,13 +45,22 @@ class Vacancy extends Model
         return $validator->passes();
     }
 
-    public function vacancies()
-    {
-        return $this->hasMany('App\Models\Vacancy');
+    public function scopeByUserId($query, $id) {
+        return $query->where('user_id', $id);
     }
 
-    public function results()
+    public function user()
     {
-        return $this->hasMany('App\Models\Result');
+        return $this->belongsTo('App\User');
+    }
+
+    public function vacancy()
+    {
+        return $this->belongsTo('App\Models\Vacancy');
+    }
+
+    public function answer()
+    {
+        return $this->belongsTo('App\Models\Answer');
     }
 }

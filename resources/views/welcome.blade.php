@@ -96,35 +96,42 @@
         <script>
             $(document).ready(function(){
             $("button").click(function(){
+
                     var data = {
-                        userId:5,
+                        question_id: 33,
+                        vacancy_id: 1,
+                        user_id: 1,
+                        answer_id: 52
                     };
-                    
                     // var data = {
                     //     userId:5,
-                    //     name:'what is photographer',
-                    //     vacancy_id: '4',
+                    // };
+                    
+                    // var data = {
+                    //     user_id:5,
+                    //     name:'what is a css',
+                    //     vacancy_id: 1,
                     //     status:1,
                     //     answers: [
                     //         {
-                    //             name: 'animalOPA', 
+                    //             name: 'planguage', 
+                    //             status: 0,
+                    //             // id: 1,
+                    //         },
+                    //         {
+                    //             name: 'humanLanguage', 
+                    //             status: 0,
+                    //             // id: 2,
+                    //         },
+                    //         {
+                    //             name: 'book', 
+                    //             status: 0,
+                    //             // id: 3,
+                    //         },
+                    //         {
+                    //             name: 'technique', 
                     //             status: 1,
-                    //             id: 1,
-                    //         },
-                    //         {
-                    //             name: 'thing', 
-                    //             status: 0,
-                    //             id: 2,
-                    //         },
-                    //         {
-                    //             name: 'persone', 
-                    //             status: 0,
-                    //             id: 3,
-                    //         },
-                    //         {
-                    //             name: 'vechicle', 
-                    //             status: 0,
-                    //             id: 4,
+                    //             // id: 4,
                     //         },
                     //     ]
                     // };
@@ -143,27 +150,28 @@
                     //     role: 2
                     // };
                     // var url = 'auth';
-                    var id = 21;
-                    var url = 'questions/' + id;
+                    // var id = 21;
+                    // var url = 'questions';
+                    var url = 'results';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
-                    // $.post(baseUrl,
-                    // data,
-                    // function(data,status){
-                    //     console.log(data);
-                    // });
-                    $.ajax({
-                        url: baseUrl,
-                        // method: 'PUT',
-                        method: 'DELETE',
-                        data: data,
-                        success: function(result) {
-                            console.log(result);
-                        },
-                        error: function(request,msg,error) {
-                            // handle failure
-                        }
+                    $.post(baseUrl,
+                    data,
+                    function(data,status){
+                        console.log(data);
                     });
+                    // $.ajax({
+                    //     url: baseUrl,
+                    //     // method: 'PUT',
+                    //     method: 'DELETE',
+                    //     data: data,
+                    //     success: function(result) {
+                    //         console.log(result);
+                    //     },
+                    //     error: function(request,msg,error) {
+                    //         // handle failure
+                    //     }
+                    // });
                 });
             });
 
