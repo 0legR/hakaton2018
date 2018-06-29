@@ -5,11 +5,11 @@
             <li ui-sref-active="active">
                 <a ui-sref="dashboard.vacancy"><i class="fa fa-list-alt fa-fw"></i> Вакансії<span></span></a>
             </li>
-            <li ng-if-start="data.user.role=='quest'" ui-sref-active="active">
-                <a ui-sref="dashboard.home"><i class="fa fa-dashboard fa-fw"></i> Дошка</a>
+            <li ng-if-start="data.user.role==2" ui-sref-active="active">
+                <a ui-sref="admin.dashboard"><i class="fa fa-dashboard fa-fw"></i> Адмінка</a>
             </li>
             <li ng-if-end ui-sref-active="active">
-                <a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Статистика<span></span></a>
+                <!--<a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Статистика<span></span></a>-->
             </li>
             <li ng-if-start="data.user.role=='quest'" ui-sref-active="active">
                 <a ui-sref="dashboard.table"><i class="fa fa-table fa-fw"></i> Таблиці</a>
