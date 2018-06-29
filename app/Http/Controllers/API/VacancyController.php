@@ -75,7 +75,7 @@ class VacancyController extends Controller
             if ($vacancy->count() > 0) {
                 return response()->json(compact('vacancy'), 201);
             } else {
-                return response()->json(['error' => strval($newVacancy->errorMessages)], 418);
+                return response()->json(['error' => strval($vacancy->errorMessages)], 418);
             }
         }
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
@@ -98,7 +98,7 @@ class VacancyController extends Controller
                 $vacancy->save();
                 return response()->json(['success' => Vacancy::RESPONSE_SUCCESS], 201);
             } else {
-                return response()->json(['error' => strval($newVacancy->errorMessages)], 418);
+                return response()->json(['error' => strval($vacancy->errorMessages)], 418);
             }
         }
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
