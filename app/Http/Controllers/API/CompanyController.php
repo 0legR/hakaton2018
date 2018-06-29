@@ -14,9 +14,20 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if($request->all()) {
+            $user = User::findOrFail($request->user_id);
+            if ($user->isHR()) {
+                $company = Company::byCreator($user->id)->get();
+                if ($company->count() > 0) {
+                    return response()->json(compact('company'), 200);
+                } else {
+                    return response()->json(['error' => Company::RESPONSE_EMPTY, 'status' => 204]);
+                }
+            }
+        }
+        return response()->json(['error' => Company::RESPONSE_EMPTY, 'status' => 204]);
     }
 
     /**
@@ -39,7 +50,7 @@ class CompanyController extends Controller
                     }
                     $newCompany->image = $image->store('companies', 'public');
                 }
-                $newCompany->created_by = $user->id;
+                $newCompany->user_id = $user->id;
                 $newCompany->save();
                 return response()->json(['success' => Company::RESPONSE_SUCCESS], 201);
             } else {

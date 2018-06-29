@@ -301,4 +301,39 @@ result:20
 user:{id: 1, name: "0leg", phone: "8(342)23412342", email: "qwert@gmail.com", role: 1}
 vacancy:{id: 1, name: "developer", status: 1,…}}
 
+#-----------------Company------------------
+#--------------store----------------
+var data = {
+    user_id:5,
+    name: 'roshen',
+    phone: '8(342)23412342',
+    address: 'sldfj434884lasdfj',
+    email: 'roshen@gmail.com',
+    web_link: 'www.roshen.com',
+};
+
+method = 'post';
+var url = 'companies';
+var baseUrl = 'http://php_server.ua/api/' + url;
+return json status;
+
+#-----------------index-----------------
+data = {
+    user_id: 1
+}
+
+method = 'get';
+var url = 'companies';
+var baseUrl = 'http://php_server.ua/api/' + url;
+return json 
+company:[{
+  address:"sldfj434884lasdfj"
+    email: "roshen@gmail.com"
+    id:1
+    image:null
+    name:"roshen"
+    phone:"8(342)23412342"
+    user_id:5
+    web_link:"www.roshen.com"  
+}]
 

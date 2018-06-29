@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Validator;
 
 class Company extends Model
 {
@@ -16,11 +17,11 @@ class Company extends Model
         'id' => 'integer',
         'name' => 'max:70',
         'phone' => 'required|regex:/^[0-9\-\(\)\/\+\s]*$/',
-        'address' => 'max:190',
+        'address' => 'max:190|nullable',
         'email' => 'required|max:50',
-        'web_link' => 'max:70',
+        'web_link' => 'max:70|nullable',
 		'image' => 'max:99|nullable',
-        'created_by' => 'integer|required',
+        'user_id' => 'integer',
     ];
 
     /**
@@ -29,7 +30,7 @@ class Company extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'name', 'phone', 'address', 'email', 'web_link', 'image', 'created_by',
+        'name', 'phone', 'address', 'email', 'web_link', 'image', 'user_id',
     ];
 
     /**
@@ -46,5 +47,9 @@ class Company extends Model
         if ($validator->fails())
             $this->errorMessages = $validator->messages();                   
         return $validator->passes();
+    }
+
+    public function scopeByCreator($query, $user_id) {
+        return $query->where('user_id', $user_id);
     }
 }

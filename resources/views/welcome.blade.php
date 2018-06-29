@@ -141,8 +141,8 @@
                     // };
                     // var vacancy_id = 7;
                     // var url = 'vacancies/'+ vacancy_id +'/edit';
-                    var question_id = 31;
-                    var url = 'questions/'+ question_id +'/edit';
+                    // var question_id = 31;
+                    // var url = 'questions/'+ question_id +'/edit';
                     // var url = 'vacancies';
                     // var data = {
                     //     name: 'miha',
@@ -157,31 +157,36 @@
                     // var url = 'results';
 
 
-                    // var url = 'companies';
+                    var url = 'companies';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
                     var data = {
                         user_id:5,
+                        name: 'roshen',
+                        phone: '8(342)23412342',
+                        address: 'sldfj434884lasdfj',
+                        email: 'roshen@gmail.com',
+                        web_link: 'www.roshen.com',
                     };
 
-                    // $.post(baseUrl,
-                    // data,
-                    // function(data,status){
-                    //     console.log(data);
-                    // });
-                    $.ajax({
-                        url: baseUrl,
-                        // method: 'PUT',
-                        method: 'GET',
-                        // method: 'DELETE',
-                        data: data,
-                        success: function(result) {
-                            console.log(result);
-                        },
-                        error: function(request,msg,error) {
-                            // handle failure
-                        }
+                    $.post(baseUrl,
+                    data,
+                    function(data,status){
+                        console.log(data);
                     });
+                    // $.ajax({
+                    //     url: baseUrl,
+                    //     // method: 'PUT',
+                    //     method: 'GET',
+                    //     // method: 'DELETE',
+                    //     data: data,
+                    //     success: function(result) {
+                    //         console.log(result);
+                    //     },
+                    //     error: function(request,msg,error) {
+                    //         // handle failure
+                    //     }
+                    // });
                 });
             });
 
