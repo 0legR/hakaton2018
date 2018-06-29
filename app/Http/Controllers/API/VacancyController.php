@@ -51,7 +51,7 @@ class VacancyController extends Controller
         if ($user->isHR()) {
             $newVacancy = new Vacancy($request->except('_token'));
             if ($newVacancy->validate()) {
-                $newVacancy->created_by = $user->id;
+                $newVacancy->user_id = $user->id;
                 $newVacancy->save();
                 return response()->json(['success' => Vacancy::RESPONSE_SUCCESS], 201);
             } else {
