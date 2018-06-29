@@ -144,30 +144,31 @@
                     // var question_id = 31;
                     // var url = 'questions/'+ question_id +'/edit';
                     // var url = 'vacancies';
-                    // var data = {
-                    //     name: 'miha',
-                    //     phone: '8(342)23412342',
-                    //     password: '123123',
-                    //     email: 'miha@gmail.com',
-                    //     role: 2
-                    // };
-                    // var url = 'auth';
+                    var data = {
+                        name: 'ar4ebald',
+                        phone: '8(342)23456342',
+                        password: '123123',
+                        email: 'ar4ebald@gmail.com',
+                        role: 2,
+                        user_ip: '192.168.0.1',
+                    };
+                    var url = 'auth';
                     // var id = 21;
                     // var url = 'questions';
                     // var url = 'results';
 
 
-                    var url = 'companies';
+                    // var url = 'companies';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
-                    var data = {
-                        user_id:5,
-                        name: 'roshen',
-                        phone: '8(342)23412342',
-                        address: 'sldfj434884lasdfj',
-                        email: 'roshen@gmail.com',
-                        web_link: 'www.roshen.com',
-                    };
+                    // var data = {
+                    //     user_id:5,
+                    //     name: 'roshen',
+                    //     phone: '8(342)23412342',
+                    //     address: 'sldfj434884lasdfj',
+                    //     email: 'roshen@gmail.com',
+                    //     web_link: 'www.roshen.com',
+                    // };
 
                     $.post(baseUrl,
                     data,
