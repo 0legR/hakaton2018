@@ -84,6 +84,21 @@ class QuestionController extends Controller
         return false;
     }
 
+    public function edit(Request $request, $id)
+    {
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR()) {
+            $question = Question::findOrFail($id);
+            $answers = $question->answers;
+            if ($question->count() > 0 && !$answers->isEmpty()) {
+                return response()->json([compact('question'), compact('answers')], 201);
+            } else {
+                return response()->json(['error' => strval($newVacancy->errorMessages)], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
+    }
+
     public function updateAnswer($answers, $dbAnswers) {
         if(count($answers) > 0) {
             foreach ($answers as $data) {
