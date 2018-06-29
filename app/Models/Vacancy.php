@@ -17,6 +17,7 @@ class Vacancy extends Model
         'id' => 'integer',
         'name' => 'max:70', 
         'status' => 'boolean',
+        'test_time' => 'integer',
     ];
 
     /**
@@ -25,7 +26,7 @@ class Vacancy extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'status',
+        'name', 'status', 'test_time',
     ];
 
     /**
