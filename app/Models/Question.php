@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
 
-class Vacancy extends Model
+class Question extends Model
 {
     const STATUS_ACTIVE = true;
     const RESPONSE_EMPTY = 'No Content';
@@ -15,7 +15,8 @@ class Vacancy extends Model
 
     private $rules = [
         'id' => 'integer',
-        'name' => 'max:70', 
+        'vacancy_id' => 'integer',
+        'name' => 'max:190', 
         'status' => 'boolean',
     ];
 
@@ -25,7 +26,7 @@ class Vacancy extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'status',
+        'name', 'status', 'vacancy_id',
     ];
 
     /**
@@ -41,6 +42,10 @@ class Vacancy extends Model
         return $query->where('status', $active);
     }
 
+    public function scopeByVacancy($query, $vacancy_id) {
+        return $query->where('vacancy_id', $vacancy_id);
+    }
+
     public function validate(){
         $validator = Validator::make($this->attributes, $this->rules);
         if ($validator->fails())
@@ -48,9 +53,9 @@ class Vacancy extends Model
         return $validator->passes();
     }
 
-    public function vacancies()
+    public function answers()
     {
-        return $this->hasMany('App\Models\Vacancy');
+        return $this->hasMany('App\Models\Answer');
     }
 
     public function results()

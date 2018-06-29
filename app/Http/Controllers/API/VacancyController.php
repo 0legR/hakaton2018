@@ -18,9 +18,9 @@ class VacancyController extends Controller
     {
         $vacancies = Vacancy::byActive(Vacancy::STATUS_ACTIVE)->get();
         if ($vacancies->isEmpty()) {
-            return response()->json(['error' => Vacancy::RESPONSE_EMPTY, 'status' => 204]);
+            return response()->json(['error' => Vacancy::RESPONSE_EMPTY], 204);
         } else {
-            return response()->json(['vacancies' => $vacancies, 'status' => 200]);
+            return response()->json(compact('vacancies'), 200);
         }
     }
 
@@ -32,17 +32,17 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->userId);
+        $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
             $newVacancy = new Vacancy($request->except('_token'));
             if ($newVacancy->validate()) {
                 $newVacancy->save();
-                return response()->json(['success' => Vacancy::RESPONSE_SUCCESS, 'status' => 201]);
+                return response()->json(['success' => Vacancy::RESPONSE_SUCCESS], 201);
             } else {
-                return response()->json(['error' => strval($newVacancy->errorMessages), 'status' => 418]);
+                return response()->json(['error' => strval($newVacancy->errorMessages)],418);
             }
         }
-        return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -54,18 +54,18 @@ class VacancyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($request->userId);
+        $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
             $vacancy = Vacancy::findOrFail($id);
             $vacancy->fill($request->except('_token'));
             if ($vacancy->validate()) {
                 $vacancy->save();
-                return response()->json(['success' => Vacancy::RESPONSE_SUCCESS, 'status' => 201]);
+                return response()->json(['success' => Vacancy::RESPONSE_SUCCESS], 201);
             } else {
-                return response()->json(['error' => strval($newVacancy->errorMessages), 'status' => 418]);
+                return response()->json(['error' => strval($newVacancy->errorMessages)], 418);
             }
         }
-        return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -76,14 +76,14 @@ class VacancyController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $user = User::findOrFail($request->userId);
+        $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
             if (Vacancy::destroy($id)) {
-                return response()->json(['success' => Vacancy::RESPONSE_DESTROY, 'status' => 201]);
+                return response()->json(['success' => Vacancy::RESPONSE_DESTROY], 201);
             } else {
-                return response()->json(['error' => Vacancy::RESPONSE_UNDESTROY, 'status' => 418]);
+                return response()->json(['error' => Vacancy::RESPONSE_UNDESTROY], 418);
             }
         }
-        return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 }

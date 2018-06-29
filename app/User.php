@@ -16,6 +16,7 @@ class User extends Authenticatable
     const TYPE_USER = 1;
     const RESPONSE_SUCCESS = 'Saved succesfull';
     const RESPONSE_UNREGISTERED = 'Unregistered user';
+    const RESPONSE_EMPTY = 'No Content';
 
     private $rules = [
         'id' => 'integer',
