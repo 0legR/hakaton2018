@@ -28,7 +28,7 @@ class UserController extends Controller
         	} else {
         		return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
         	}
-        	return response()->json(['user' => $user, 'status' => 200]);
+        	return response()->json(compact('user'), 200);
         }
         return response()->json(['error' => User::RESPONSE_EMPTY], 204);
     }
