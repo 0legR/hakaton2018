@@ -268,6 +268,22 @@ angular
                 templateUrl: 'views/admin/vacancy.html',
                 cache: false,
             })
+
+            .state('admin.questions', {
+                url: "/questions",
+                templateUrl: 'views/admin/questions.html',
+                cache: false,
+            })
+            .state('admin.question', {
+                url: "/question/:id",
+                templateUrl: 'views/admin/question.html',
+                cache: false,
+            })
+            .state('admin.question_form', {
+                url: "/question",
+                templateUrl: 'views/admin/question.html',
+                cache: false,
+            })
     }]);
 
     

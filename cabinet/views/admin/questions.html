@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Вакансії компанії</h1>
+        <h1 class="page-header">Тести компанії</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<div class="row" ng-controller="adminVacanciesCtrl">
+<div class="row" ng-controller="adminQuestionsCtrl">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading" style="overflow: hidden">
-               Вакансії компанії
-                <a type="button" ng-href="#/admin/vacancy" class="btn btn-primary pull-right">Додати</a>
+                Тести компанії
+                <a type="button" ng-href="#/admin/question" class="btn btn-primary pull-right">Додати</a>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -17,19 +17,21 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>Назва</th>
+                            <th>Питання</th>
+                            <th>Вакансія</th>
                             <th style="width: 90px;">Дії</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="odd gradeX" ng-repeat="item in vacancies track by $index">
+                        <tr class="odd gradeX" ng-repeat="item in questions track by $index">
                             <td>{{item.name}}</td>
+                            <td>{{item.question}}</td>
                             <td>
-                                <a ng-href="#/admin/vacancy/{{item.id}}">
+                                <a ng-href="#/admin/question/{{item.id}}">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="">
-                                    <i class="fa fa-trash" ng-click="removeVacancy(item.id)"></i>
+                                    <i class="fa fa-trash" ng-click="removeQuestion(item.id)"></i>
                                 </a>
                             </td>
                         </tr>
