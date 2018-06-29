@@ -97,15 +97,15 @@
             $(document).ready(function(){
             $("button").click(function(){
 
-                    var data = {
-                        question_id: 33,
-                        vacancy_id: 1,
-                        user_id: 1,
-                        answer_id: 52
-                    };
                     // var data = {
-                    //     userId:5,
+                    //     question_id: 33,
+                    //     vacancy_id: 1,
+                    //     user_id: 1,
+                    //     answer_id: 52
                     // };
+                    var data = {
+                        user_id:5,
+                    };
                     
                     // var data = {
                     //     user_id:5,
@@ -136,13 +136,17 @@
                     //     ]
                     // };
                     // var url = 'vacancies/4';
-                    var data = {
-                        user_id:5,
-                        name:'attorney',
-                        status:1,
-                        test_time: 60,
-                    };
-                    var url = 'vacancies';
+                    // var data = {
+                    //     user_id:5,
+                    //     name:'attorney',
+                    //     status:1,
+                    //     test_time: 60,
+                    // };
+                    var vacancy_id = 7;
+                    var url = 'vacancies/'+ vacancy_id +'/edit';
+                    // var question_id = 31;
+                    // var url = 'questions/'+ question_id +'/edit';
+                    // var url = 'vacancies';
                     // var data = {
                     //     name: 'miha',
                     //     phone: '8(342)23412342',
@@ -156,23 +160,24 @@
                     // var url = 'results';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
-                    $.post(baseUrl,
-                    data,
-                    function(data,status){
-                        console.log(data);
-                    });
-                    // $.ajax({
-                    //     url: baseUrl,
-                    //     // method: 'PUT',
-                    //     method: 'DELETE',
-                    //     data: data,
-                    //     success: function(result) {
-                    //         console.log(result);
-                    //     },
-                    //     error: function(request,msg,error) {
-                    //         // handle failure
-                    //     }
+                    // $.post(baseUrl,
+                    // data,
+                    // function(data,status){
+                    //     console.log(data);
                     // });
+                    $.ajax({
+                        url: baseUrl,
+                        // method: 'PUT',
+                        method: 'GET',
+                        // method: 'DELETE',
+                        data: data,
+                        success: function(result) {
+                            console.log(result);
+                        },
+                        error: function(request,msg,error) {
+                            // handle failure
+                        }
+                    });
                 });
             });
 
