@@ -18,7 +18,7 @@ class Vacancy extends Model
         'name' => 'max:70', 
         'status' => 'boolean',
         'test_time' => 'integer',
-        'created_by' => 'integer',
+        'user_id' => 'integer',
     ];
 
     /**
@@ -27,7 +27,7 @@ class Vacancy extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'status', 'test_time', 'created_by',
+        'name', 'status', 'test_time', 'user_id',
     ];
 
     /**
@@ -44,7 +44,7 @@ class Vacancy extends Model
     }
 
     public function scopeByCreator($query, $user_id) {
-        return $query->where('created_by', $user_id);
+        return $query->where('user_id', $user_id);
     }
 
     public function validate(){

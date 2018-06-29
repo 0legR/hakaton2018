@@ -94,10 +94,9 @@ class QuestionController extends Controller
     {
         $user = User::findOrFail($request->user_id);
         if ($user->isHR()) {
-            $question = Question::findOrFail($id);
-            $answers = $question->answers;
-            if ($question->count() > 0 && !$answers->isEmpty()) {
-                return response()->json([compact('question'), compact('answers')], 201);
+            $question = Question::with('answers')->findOrFail($id);
+            if ($question->count() > 0) {
+                return response()->json(compact('question'), 201);
             } else {
                 return response()->json(['error' => strval($question->errorMessages)], 418);
             }
