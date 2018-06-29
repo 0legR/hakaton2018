@@ -136,12 +136,13 @@
                     //     ]
                     // };
                     // var url = 'vacancies/4';
-                    // var data = {
-                    //     userId:5,
-                    //     name:'fotographer',
-                    //     status:1
-                    // };
-                    // var url = 'vacancies';
+                    var data = {
+                        user_id:5,
+                        name:'attorney',
+                        status:1,
+                        test_time: 60,
+                    };
+                    var url = 'vacancies';
                     // var data = {
                     //     name: 'miha',
                     //     phone: '8(342)23412342',
@@ -152,7 +153,7 @@
                     // var url = 'auth';
                     // var id = 21;
                     // var url = 'questions';
-                    var url = 'results';
+                    // var url = 'results';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
                     $.post(baseUrl,
