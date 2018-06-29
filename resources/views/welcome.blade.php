@@ -103,9 +103,6 @@
                     //     user_id: 1,
                     //     answer_id: 52
                     // };
-                    var data = {
-                        user_id:5,
-                    };
                     
                     // var data = {
                     //     user_id:5,
@@ -142,10 +139,10 @@
                     //     status:1,
                     //     test_time: 60,
                     // };
-                    var vacancy_id = 7;
-                    var url = 'vacancies/'+ vacancy_id +'/edit';
-                    // var question_id = 31;
-                    // var url = 'questions/'+ question_id +'/edit';
+                    // var vacancy_id = 7;
+                    // var url = 'vacancies/'+ vacancy_id +'/edit';
+                    var question_id = 31;
+                    var url = 'questions/'+ question_id +'/edit';
                     // var url = 'vacancies';
                     // var data = {
                     //     name: 'miha',
@@ -158,7 +155,14 @@
                     // var id = 21;
                     // var url = 'questions';
                     // var url = 'results';
+
+
+                    // var url = 'companies';
                     var baseUrl = 'http://php_server.ua/api/' + url;
+
+                    var data = {
+                        user_id:5,
+                    };
 
                     // $.post(baseUrl,
                     // data,
