@@ -38,17 +38,11 @@
                                     <div class="form-group input-group">
                                         <input class="form-control" ng-model="answer.name">
                                         <span class="input-group-addon" style="padding: 0px 10px 10px 40px;">
-                                            <input type="radio" name="optionsRadios" value="answer.id" checked>
+                                            <input type="radio" value="answer.id" ng-model="answer.status" data-ng-value="1">
                                         </span>
+                                        <!--<input type="radio" name="response" data-ng-model="choice.isUserAnswer" data-ng-value="true" />-->
+                                        <!--{{choice.text}}-->
                                     </div>
-
-                                    <!--<div class="form-group">-->
-                                        <!--<label>Назва</label>-->
-                                        <!--<input class="form-control" ng-model="answer.name">-->
-                                    <!--</div>-->
-                                    <!--<label>-->
-                                        <!--<input type="radio" name="optionsRadios" value="answer.id" checked>Вірна відповідь-->
-                                    <!--</label>-->
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-default" ng-click="createQuestion(question)" ng-disabled="questionForm.$invalid">Зберегти</button>

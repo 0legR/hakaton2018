@@ -112,19 +112,28 @@ angular.module('sbAdminApp')
     }])
     .controller('adminVacancyCtrl', ['$scope', '$http', '$state','$stateParams', function ($scope, $http, $state, $stateParams) {
         $scope.vacancy = {};
+        var method = 'post';
 
         if($stateParams.id){
+            var method = 'put';
             $http({
                 method: 'get',
-                url: basePath + 'vacancies',
-                params: {user_id:$stateParams.id}
+                url: basePath + 'vacancies/'+ $stateParams.id +'/edit',
+                params: {user_id: 1}
             }).then(function successCallback(response) {
-                $scope.vacancies = response.data;
+                $scope.vacancy = response.data.vacancy;
             }, function errorCallback(response) {
                 console.log(response);
             });
         }
 
+        $scope.sendVacancy = function(data) {
+            if($stateParams.id){
+                $scope.updateVacancy($stateParams.id, data);
+            }else{
+                $scope.createVacancy(data);
+            }
+        };
         $scope.createVacancy = function(data) {
             $http({
                 method: 'post',
@@ -132,6 +141,19 @@ angular.module('sbAdminApp')
                 data: data
             }).then(function successCallback(response) {
                 console.log(response)
+                $state.go("admin.vacancies", {}, {reload: true});
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+
+        $scope.updateVacancy = function(id, data) {
+            $http({
+                method: 'put',
+                url: basePath + 'vacancies/'+id,
+                params: data
+            }).then(function successCallback(response) {
+                console.log(response);
                 $state.go("admin.vacancies", {}, {reload: true});
             }, function errorCallback(response) {
                 console.log(response);
@@ -192,10 +214,11 @@ angular.module('sbAdminApp')
         if($stateParams.id){
             $http({
                 method: 'get',
-                url: basePath + 'question',
-                // params: data
+                url: basePath + 'questions/'+ $stateParams.id +'/edit',
+                params: {user_id: 1}
             }).then(function successCallback(response) {
-                $scope.question = response.data;
+                console.log(response)
+                $scope.question = response.data.question;
             }, function errorCallback(response) {
                 console.log(response);
             });
