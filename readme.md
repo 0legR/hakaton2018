@@ -38,14 +38,16 @@ method = 'get';
 return = json {vacancy: {
 	id: 1,
 	name: 'asdf',
-	status: bool
+	status: bool,
+    test_time: 60
 }};
 #----------store--------
 
 var data = {
     user_id:5,
     name:'fotographer',
-    status:1
+    status:1,
+    test_time: 60
 };
 method = 'post';
 var url = 'vacancies';
@@ -56,7 +58,8 @@ return json status;
 var data = {
     user_id:5,
     name:'fotographer-todo',
-    status:0
+    status:0,
+    test_time: 60
 };
 method = 'PUT';
 var id = 4;
