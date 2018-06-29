@@ -8,7 +8,8 @@ var data = {
     phone: '8(342)23412342',
     password: '123123',
     email: 'miha@gmail.com',
-    role: 2
+    role: 2,
+    user_ip: '192.168.0.1',
 };
 method = 'post';
 var url = 'auth';
@@ -26,7 +27,9 @@ return json {user : {
 	name: 'miha',
     phone: '8(342)23412342',
     email: 'miha@gmail.com',
-    isHR / isUser: bool
+    isHR / isUser: bool,
+    user_ip: '192.168.0.1',
+    is_cheater: 0,
 }};
 
 
