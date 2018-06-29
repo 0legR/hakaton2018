@@ -24,7 +24,7 @@ class QuestionController extends Controller
                 if ($request->vacancy_id) {
                     $questions = Question::byVacancy($request->vacancy_id)->get();
                 } else {
-                    $questions = Question::all();
+                    $questions = Question::with('vacancy')->get();
                 }
                 
                 $vacancies = Vacancy::all();

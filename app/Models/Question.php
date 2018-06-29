@@ -62,4 +62,9 @@ class Question extends Model
     {
         return $this->hasMany('App\Models\Result');
     }
+
+    public function vacancy()
+    {
+        return $this->belongsTo('App\Models\Vacancy');
+    }
 }
