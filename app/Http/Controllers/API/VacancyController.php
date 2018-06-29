@@ -14,14 +14,28 @@ class VacancyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vacancies = Vacancy::byActive(Vacancy::STATUS_ACTIVE)->get();
+        if ($request->all()) {
+            $vacancies = $this->getVacanciesByCreator($request);
+        } else {
+            $vacancies = Vacancy::byActive(Vacancy::STATUS_ACTIVE)->get();
+        }
         if ($vacancies->isEmpty()) {
             return response()->json(['error' => Vacancy::RESPONSE_EMPTY], 204);
         } else {
             return response()->json(compact('vacancies'), 200);
         }
+    }
+
+    public function getVacanciesByCreator($data)
+    {
+        $userId = $data->user_id;
+        $user = User::findOrFail($userId);
+        if ($user->isHR()) {
+            return Vacancy::byCreator($userId)->get();
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -32,10 +46,12 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->user_id);
+        $userId = $request->user_id;
+        $user = User::findOrFail($userId);
         if ($user->isHR()) {
             $newVacancy = new Vacancy($request->except('_token'));
             if ($newVacancy->validate()) {
+                $newVacancy->created_by = $user->id;
                 $newVacancy->save();
                 return response()->json(['success' => Vacancy::RESPONSE_SUCCESS], 201);
             } else {
