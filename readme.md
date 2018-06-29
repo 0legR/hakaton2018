@@ -75,7 +75,17 @@ method = 'post';
 var url = 'vacancies';
 baseUrl = 'http://php_server.ua/api/' + url;
 return json status;
-
+#------------edit-----------------
+var data = {
+    user_id:5,
+};
+method = 'get';
+var vacancy_id = 7;
+var url = 'vacancies/'+ vacancy_id +'/edit';
+var baseUrl = 'http://php_server.ua/api/' + url;
+return json 
+    vacancy:
+        {id: 7, name: "chef", status: 1, test_time: 60, created_by: 5}
 #-----------update--------
 var data = {
     user_id:5,
@@ -159,6 +169,23 @@ var data = {
 };
 
 return json status;
+#---------edit------------------
+
+var data = {
+    user_id:5,
+};
+var question_id = 31;
+var url = 'questions/'+ question_id +'/edit';
+method = 'get';
+var baseUrl = 'http://php_server.ua/api/' + url;
+return json 
+question:
+        {id: 31, vacancy_id: 1, name: "what is a php forever", status: 1,…}
+answers:
+        0:{id: 41, question_id: 31, name: "planguage", status: 0}
+        1:{id: 42, question_id: 31, name: "humanLanguage", status: 0}
+        2:{id: 43, question_id: 31, name: "book", status: 1}
+        3:{id: 44, question_id: 31, name: "technique", status: 0}
 #---------update----------------------------
 var id = 21;
 var url = 'questions/' + id;

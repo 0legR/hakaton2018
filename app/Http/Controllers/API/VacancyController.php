@@ -61,6 +61,20 @@ class VacancyController extends Controller
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
+    public function edit(Request $request, $id)
+    {
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR()) {
+            $vacancy = Vacancy::findOrFail($id);
+            if ($vacancy->count() > 0) {
+                return response()->json(compact('vacancy'), 201);
+            } else {
+                return response()->json(['error' => strval($newVacancy->errorMessages)], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
+    }
+
     /**
      * Update the specified resource in storage.
      *
