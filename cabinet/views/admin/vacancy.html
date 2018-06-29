@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Вакансія</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row" ng-controller="adminVacancyCtrl">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Дані вакансії
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="vacancy">
+                            <input class="form-control" type="hidden" ng-model="vacancy.user_id" ng-init="vacancy.user_id=1">
+                            <div class="form-group">
+                                <label>Назва</label>
+                                <input class="form-control" ng-model="vacancy.name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Тривалість тесту</label>
+                                <input class="form-control" type="number" ng-model="vacancy.test_time" required>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="vacancy.status">Опубліковано
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="sendVacancy(vacancy)" ng-disabled="vacancy.$invalid">Зберегти</button>
+                        </form>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>

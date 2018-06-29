@@ -1,0 +1,15 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Адмінка</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row"  ng-controller="adminCtrl">
+        <stats number="" comments="Налаштування компанії" goto="#" colour="primary" type="wrench"></stats>
+        <stats number="{{vacanciesCount}}" comments="Вакансії" colour="green" goto="#admin/vacancies" type="list-alt"></stats>
+        <stats number="{{questionsCount}}" comments="Тести" colour="red" goto="#admin/questions" type="tasks"></stats>
+        <stats number="{{0}}" comments="Результати" colour="yellow" goto="#" type="bar-chart-o"></stats>
+    </div>
+</div>

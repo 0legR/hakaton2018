@@ -1,14 +1,15 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Вакансії</h1>
+        <h1 class="page-header">Вакансії компанії</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<div class="row" ng-controller="vacancyCtrl">
+<div class="row" ng-controller="adminVacanciesCtrl">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                Відкриті вакансії
+            <div class="panel-heading" style="overflow: hidden">
+               Вакансії компанії
+                <a type="button" ng-href="#/admin/vacancy" class="btn btn-primary pull-right">Додати</a>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -17,13 +18,20 @@
                         <thead>
                         <tr>
                             <th>Назва</th>
-                            <th>Пройти тест</th>
+                            <th style="width: 90px;">Дії</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="odd gradeX" ng-repeat="item in vacancies track by $index">
                             <td>{{item.name}}</td>
-                            <td><a href="{{!data.user.role ? '#login' : '#dashboard/test'}}">Пройти тест</a></td>
+                            <td>
+                                <a ng-href="#/admin/vacancy/{{item.id}}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-trash" ng-click="removeVacancy(item.id)"></i>
+                                </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
