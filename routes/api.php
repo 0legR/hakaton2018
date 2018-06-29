@@ -19,8 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('auth', 'API\UserController@store');
 Route::get('loggin', 'API\UserController@loggin');
-Route::resource('vacancies', 'API\VacancyController', ['only' => ['index', 'store', 'edit', 'update', 'destroy']]);
-Route::resource('questions', 'API\QuestionController', ['only' => ['index', 'store', 'edit', 'update', 'destroy']]);
+Route::resource('vacancies', 'API\VacancyController', ['except' => ['create', 'show']]);
+Route::resource('questions', 'API\QuestionController', ['except' => ['create', 'show']]);
 Route::resource('results', 'API\ResultController', ['only' => ['index', 'store']]);
+Route::resource('companies', 'API\CompanyController', ['except' => ['create', 'show']]);
 
 

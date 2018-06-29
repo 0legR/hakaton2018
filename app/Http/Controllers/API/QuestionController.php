@@ -83,7 +83,13 @@ class QuestionController extends Controller
         }
         return false;
     }
-
+    
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Request $request, $id)
     {
         $user = User::findOrFail($request->user_id);
@@ -93,7 +99,7 @@ class QuestionController extends Controller
             if ($question->count() > 0 && !$answers->isEmpty()) {
                 return response()->json([compact('question'), compact('answers')], 201);
             } else {
-                return response()->json(['error' => strval($newVacancy->errorMessages)], 418);
+                return response()->json(['error' => strval($question->errorMessages)], 418);
             }
         }
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);

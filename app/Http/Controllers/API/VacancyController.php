@@ -61,6 +61,12 @@ class VacancyController extends Controller
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Request $request, $id)
     {
         $user = User::findOrFail($request->user_id);
