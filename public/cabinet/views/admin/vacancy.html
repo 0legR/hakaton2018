@@ -26,7 +26,7 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="vacancy.status">Опубліковано
+                                    <input type="checkbox" ng-model="vacancy.status" ng-true-value=1 ng-false-value=0>Опубліковано
                                 </label>
                             </div>
                             <button type="submit" class="btn btn-default" ng-click="sendVacancy(vacancy)" ng-disabled="vacancy.$invalid">Зберегти</button>
