@@ -40,7 +40,6 @@ angular.module('sbAdminApp')
         }
 
         $scope.loggout = function() {
-            console.log(localStorage);
             var userData = JSON.parse(localStorage.user);
             if (userData !== null) {
                 localStorage.removeItem("user");
@@ -64,6 +63,9 @@ angular.module('sbAdminApp')
             }, function errorCallback(response) {
                 console.log(response);
             });
+        }
+        $scope.companyProfile = function() {
+            location.href="#admin/settings"
         }
     }])
 
@@ -292,7 +294,85 @@ angular.module('sbAdminApp')
 
     }])
     .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+        $scope.companies = {};
+        // var method = 'post';
+        $scope.companyList = function(data) {
+            $http({
+                method: 'get',
+                url: basePath + 'companies',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                console.log(response.data.companies);
+                $scope.companies = response.data.companies;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+        $scope.companyList();
+        $scope.removeCompany = function(id){
+            bootbox.confirm('Дійсно видалити компанію?', function(result) {
+                if(result){
+                    $http({
+                        method: 'DELETE',
+                        url: basePath+'companies/'+id,
+                        params: {user_id:$rootScope.userData.user.id},
+                    }).then(function successCallback(response) {
+                        $scope.companyList();
+                    }, function errorCallback(response) {
+                        console.log(response);
+                    });
+                }
+            });
+        }
+    }])
+    .controller('adminCompanyCtrl', ['$scope', '$http', '$state','$stateParams','$rootScope', function ($scope, $http, $state, $stateParams,$rootScope) {
+        $scope.company = {};
+        var method = 'post';
 
+        if($stateParams.id){
+            $http({
+                method: 'get',
+                url: basePath + 'companies/'+ $stateParams.id +'/edit',
+                params: {user_id: $rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                $scope.company = response.data.company;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        }
+
+        $scope.sendCompany = function(data) {
+            if($stateParams.id){
+                $scope.updateCompany($stateParams.id, data);
+            }else{
+                $scope.createCompany(data);
+            }
+        };
+        $scope.createCompany = function(data) {
+            $http({
+                method: 'post',
+                url: basePath + 'companies',
+                data: data
+            }).then(function successCallback(response) {
+                console.log(response)
+                $state.go("admin.settings", {}, {reload: true});
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+
+        $scope.updateCompany = function(id, data) {
+            $http({
+                method: 'put',
+                url: basePath + 'companies/'+id,
+                params: data
+            }).then(function successCallback(response) {
+                console.log(response);
+                $state.go("admin.settings", {}, {reload: true});
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
     }])
 
     //applicant controllers
