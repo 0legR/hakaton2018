@@ -83,13 +83,9 @@
                     Laravel
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+
+                    <example-component></example-component>
+
                 <button>ajax</button>
             </div>
         </div>
@@ -145,12 +141,12 @@
                     // var url = 'questions/'+ question_id +'/edit';
                     // var url = 'vacancies';
                     var data = {
-                        name: 'ar4ebald',
+                        name: 'alex',
                         phone: '8(342)23456342',
                         password: '123123',
-                        email: 'ar4ebald@gmail.com',
+                        email: 'alex@gmail.com',
                         role: 2,
-                        user_ip: '192.168.0.1',
+                        user_ip: '192.168.10.10',
                     };
                     var url = 'auth';
                     // var id = 21;

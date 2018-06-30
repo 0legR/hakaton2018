@@ -14,7 +14,7 @@ class AlterUsersTableAddUserIpColumn extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('user_ip', 11)->nullable();
+            $table->string('user_ip', 15)->nullable();
         });
     }
 
