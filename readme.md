@@ -172,6 +172,22 @@ var data = {
 };
 
 return json status;
+
+#---------show-------------------
+var id = 24;
+var url = 'questions/' + id;
+var baseUrl = 'http://php_server.ua/api/' + url;
+method: 'GET'
+var data = {
+    user_id:3,
+}
+
+return json status;
+answers [{id: 13, question_id: 24, name: "animal", status: 0},…]
+id:24
+name:"what is a policeman"
+status:1
+vacancy_id:6
 #---------edit------------------
 
 var data = {
