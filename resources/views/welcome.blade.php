@@ -83,13 +83,9 @@
                     Laravel
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+
+                    <example-component></example-component>
+
                 <button>ajax</button>
             </div>
         </div>
@@ -144,30 +140,31 @@
                     // var question_id = 31;
                     // var url = 'questions/'+ question_id +'/edit';
                     // var url = 'vacancies';
-                    // var data = {
-                    //     name: 'miha',
-                    //     phone: '8(342)23412342',
-                    //     password: '123123',
-                    //     email: 'miha@gmail.com',
-                    //     role: 2
-                    // };
-                    // var url = 'auth';
+                    var data = {
+                        name: 'alex',
+                        phone: '8(342)23456342',
+                        password: '123123',
+                        email: 'alex@gmail.com',
+                        role: 2,
+                        user_ip: '192.168.10.10',
+                    };
+                    var url = 'auth';
                     // var id = 21;
                     // var url = 'questions';
                     // var url = 'results';
 
 
-                    var url = 'companies';
+                    // var url = 'companies';
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
-                    var data = {
-                        user_id:5,
-                        name: 'roshen',
-                        phone: '8(342)23412342',
-                        address: 'sldfj434884lasdfj',
-                        email: 'roshen@gmail.com',
-                        web_link: 'www.roshen.com',
-                    };
+                    // var data = {
+                    //     user_id:5,
+                    //     name: 'roshen',
+                    //     phone: '8(342)23412342',
+                    //     address: 'sldfj434884lasdfj',
+                    //     email: 'roshen@gmail.com',
+                    //     web_link: 'www.roshen.com',
+                    // };
 
                     $.post(baseUrl,
                     data,

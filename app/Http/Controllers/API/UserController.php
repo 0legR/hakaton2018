@@ -9,7 +9,8 @@ use App\User;
 class UserController extends Controller
 {
     public function store(Request $request) {
-    	$newUser = new User($request->except('_token'));
+    	$newUser = new User($request->except('_token', 'password'));
+        $newUser->password = bcrypt($request->password);
     	if ($newUser->validate()) {
     		$newUser->save();
     		return response()->json(['success' => User::RESPONSE_SUCCESS], 201);
@@ -28,7 +29,7 @@ class UserController extends Controller
         	} else {
         		return response()->json(['error' => User::RESPONSE_UNREGISTERED, 'status' => 401]);
         	}
-        	return response()->json(['user' => $user, 'status' => 200]);
+        	return response()->json(compact('user'), 200);
         }
         return response()->json(['error' => User::RESPONSE_EMPTY], 204);
     }

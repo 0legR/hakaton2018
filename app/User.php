@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email' => 'required|max:50',
         'password' => 'required|min:6',
         'is_cheater' => 'boolean',
+        'user_ip' => 'nullable|ip',
     ];
 
     /**
@@ -33,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'role', 'is_cheater',
+        'name', 'email', 'password', 'phone', 'role', 'is_cheater', 'user_ip',
     ];
 
     /**
