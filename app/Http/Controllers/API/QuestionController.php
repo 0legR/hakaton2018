@@ -20,9 +20,9 @@ class QuestionController extends Controller
     {
         if($request->all()) {
             $user = User::findOrFail($request->user_id);
-            if ($user->isHR()) {
+            // if ($user->isHR()) {
                 if ($request->vacancy_id) {
-                    $questions = Question::byVacancy($request->vacancy_id)->get();
+                    $questions = Question::with('answers')->byVacancy($request->vacancy_id)->get();
                 } else {
                     $questions = Question::with('vacancy')->get();
                 }
@@ -37,7 +37,7 @@ class QuestionController extends Controller
                     ]);
                 } 
                 return response()->json(['error' => Question::RESPONSE_EMPTY, 'status' => 204]);
-            }
+            // }
         }
         return response()->json(['error' => Question::RESPONSE_EMPTY, 'status' => 204]);
     }

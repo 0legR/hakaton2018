@@ -7,7 +7,17 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('registrationCtrl', ['$scope', '$http', '$state','$location', function ($scope, $http, $state, $location) {
+    .controller('vacancyCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.vacancies = [
+            {name: 'JS'},
+            {name: 'C++'},
+            {name: 'Повар'}
+        ];
+    }])
+    .controller('testCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+
+    }])
+    .controller('registrationCtrl', ['$scope', '$http', '$state','$location', '$rootScope', function ($scope, $http, $state, $location, $rootScope) {
         $scope.auth_data = {};
         $scope.loggin = function(data){
             $http({
@@ -15,10 +25,28 @@ angular.module('sbAdminApp')
                 url: basePath+'loggin',
                 params: data
             }).then(function successCallback(response) {
-                $state.go("dashboard.test", {}, {reload: true});
+                $scope.logginHelper(response.data);
             }, function errorCallback(response) {
                 console.log(response);
             });
+        }
+        
+        $scope.logginHelper = function(data) {
+            localStorage.setItem("user", JSON.stringify(data));
+            var userData = JSON.parse(localStorage.user);
+            if (userData.user.hasOwnProperty('isHR')) {
+                $state.go("admin.dashboard", {}, {reload: true});                    
+            } else if (userData.user.hasOwnProperty('isApplicant')) {
+                $state.go("applicant.vacanies", {}, {reload: true});                    
+            }
+        }
+
+        $scope.loggout = function() {
+            var userData = JSON.parse(localStorage.user);
+            if (userData !== null) {
+                localStorage.removeItem("user");
+                $state.go("applicant.main", {}, {reload: true});
+            }
         }
 
         $scope.auth = function(data){
