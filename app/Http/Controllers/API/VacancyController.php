@@ -38,6 +38,19 @@ class VacancyController extends Controller
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
+    public function show(Request $request, $id)
+    {
+        if($request->all()) {
+            $user = User::findOrFail($request->user_id);
+            if ($user->isApplicant()) {
+                $vacancy = Vacancy::findOrFail($id);
+                return response()->json(compact('vacancy'), 200);
+            }
+            return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
+        }
+        return response()->json(['error' => User::RESPONSE_EMPTY], 204);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
