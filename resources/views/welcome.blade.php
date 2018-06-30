@@ -149,14 +149,13 @@
                     //     user_ip: '192.168.10.10',
                     // };
                     // var url = 'auth';
-                    var id = 24;
-                    var url = 'questions/' + id;
+                    // var id = 24;
+                    // var url = 'questions/' + id;
                     // var url = 'questions';
                     // var url = 'results';
 
 
                     // var url = 'companies';
-                    var baseUrl = 'http://php_server.ua/api/' + url;
 
                     // var data = {
                     //     user_id:5,
@@ -166,14 +165,26 @@
                     //     email: 'roshen@gmail.com',
                     //     web_link: 'www.roshen.com',
                     // };
-                    var data = {
-                        user_id:3,
-                    }
+                    // var data = {
+                    //     user_id:3,
+                    // }
                     // $.post(baseUrl,
                     // data,
                     // function(data,status){
                     //     console.log(data);
                     // });
+                    var data = {
+                        user_id:1,
+                        vacancy_id:6,
+                    }
+                    // var data = {
+                    //     user_id:1,
+                    //     question_id:33,
+                    // }
+                    var url = 'passed_result';
+
+                    var baseUrl = 'http://php_server.ua/api/' + url;
+
                     $.ajax({
                         url: baseUrl,
                         // method: 'PUT',
