@@ -410,3 +410,36 @@ company:[{
     web_link:"www.roshen.com"  
 }]
 
+#-----------------order---------------------
+#-----------------store--------------------
+var data = {
+    user_id:5,
+    test_time: 180,
+    company_name: 'obolon',
+    city: 'kyiv',
+    vacancy: 'beer_maker',
+    vacancy_level: 'junior',
+    technoligy: 'european',
+    questions_amount: 100,
+    complexity_level: 'middle',
+};
+
+var url = 'orders';
+method: post;
+var baseUrl = 'http://php_server.ua/api/' + url;
+
+return json status;
+
+#------------------index-by Admin------------------------
+var data = {
+    user_id:5
+}
+var url = 'orders';
+method: 'get';
+var baseUrl = 'http://php_server.ua/api/' + url;
+
+return
+{"orders":[{"id":1,"company_name":"obolon","city":"kyiv","vacancy":"beer_maker","vacancy_level":"junior","technoligy":"european","questions_amount":100,"complexity_level":"middle","test_time":"180","user_id":5}]}
+
+
+
