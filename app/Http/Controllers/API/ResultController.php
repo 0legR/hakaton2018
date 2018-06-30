@@ -95,7 +95,7 @@ class ResultController extends Controller
                 $trueAnswers += 1;
             }
         }
-        return count($trueAnswers);
+        return $trueAnswers;
     }
 
     /**

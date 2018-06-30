@@ -402,7 +402,8 @@ angular.module('sbAdminApp')
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
                 if(response.data.result.length){
-                    $scope.isStart = true
+                    $scope.isFinished = true;
+                    $scope.getFinalResult();
                 }
             }, function errorCallback(response) {
                 console.log(response);
@@ -485,12 +486,15 @@ angular.module('sbAdminApp')
                 url: basePath + 'results',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
-                console.log(response);
+                $scope.result = response.data.results.result;
                 $scope.isFinished = true;
             }, function errorCallback(response) {
                 console.log(response);
             });
 
         }
-        // $scope.getFinalResult();
+
+        $scope.$watch('isFinished', function(value) {
+            $scope.isStart = false;
+        });
     }])

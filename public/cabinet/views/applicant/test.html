@@ -100,11 +100,11 @@
                     </div>
                 </div>
                 <div class="panel-body" ng-show="isFinished">
-                    <div class="alert alert-success alert-dismissable" >
+                    <div class="alert alert-dismissable" ng-class="{'alert-success': result>=70 , 'alert-warning':result<70} ">
                         Вітаємо, ви пройшли тест. Кількість успішних відповідей становить <strong>{{result}} %</strong>
                         <div ng-show="result>=70">
                             Ви можете прикріпити Ваше резюме роботодавцю: <em ng-click="attachCV=!attachCV" style="cursor: pointer">прикріпити</em>
-                            <div ng-show="attachCV">
+                            <div ng-show="attachCV" >
                                 <input type="file" style="display: inline-block">
                                 <button type="button" class="btn btn-primary btn-xs" style="display: inline-block" ng-click="attachCV=false">Відправити</button>
                             </div>
