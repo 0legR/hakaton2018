@@ -77,7 +77,7 @@ angular.module('sbAdminApp')
                 url: basePath + 'vacancies',
                 params: {user_id:$rootScope.userData.user.id}
             }).then(function successCallback(response) {
-                return response.data.vacancies.length?response.data.vacancies.length:0;
+                return response.data.vacancies?response.data.vacancies.length:0;
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -392,39 +392,63 @@ angular.module('sbAdminApp')
     }])
     .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
         $scope.isStart = false;
+        $scope.isFinished = false;
         $scope.selectedAnswer = null;
 
         $scope.isStartByUser = function() {
             $http({
                 method: 'get',
-                url: basePath + 'questions',
+                url: basePath + 'passed_result',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
-                if(response.data){
-                    $scope.isStart = true
+                if(response.data.result.length){
+                    $scope.isFinished = true;
+                    $scope.getFinalResult();
                 }
             }, function errorCallback(response) {
                 console.log(response);
             });
         };
 
+        if($rootScope.userData){
+            $scope.isStartByUser();
+        }
+
+        $scope.startTest = function() {
+            $scope.isStart = true;
+            $scope.getTest();
+            // $http({
+            //     method: 'get',
+            //     url: basePath + 'passed_result',
+            //     params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
+            // }).then(function successCallback(response) {
+            //     if(response.data.result.length){
+            //         $scope.isStart = true
+            //     }
+            // }, function errorCallback(response) {
+            //     console.log(response);
+            // });
+        };
+
         $scope.getTest = function() {
+            // console.log($rootScope.userData.user.id);
+            // console.log($stateParams.id);
             $http({
                 method: 'get',
                 url: basePath + 'questions',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
+                console.log(response);
                 $scope.vacancies = response.data.vacancies;
-                $scope.question = response.data.questions;
+                $scope.questions = response.data.questions;
                 //todo get empty status from api
-                angular.forEach($scope.question, function(value, key) {
+                angular.forEach($scope.questions, function(value, key) {
                     angular.forEach(value.answers, function(value_a, key_a) {
                         value_a.status = 0;
                     });
                 });
-                $scope.question = $scope.question[0];
-                // console.log($scope.question);
-                // $scope.question = response.data.questions[0];
+                $scope.currentQuestion = $scope.questions[0];
+                $scope.questionIndex = 0;
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -434,7 +458,7 @@ angular.module('sbAdminApp')
             $scope.selectedAnswer = answer.id;
         };
 
-        $scope.sendAnswer = function(data) {
+        $scope.sendAnswer = function(data, index) {
             $http({
                 method: 'post',
                 url: basePath + 'results',
@@ -445,11 +469,32 @@ angular.module('sbAdminApp')
                     vacancy_id: data.vacancy_id,
                 }
             }).then(function successCallback(response) {
-               console.log(response)
+                $scope.questionIndex++;
+                if($scope.questionIndex<$scope.questions.length){
+                    $scope.currentQuestion = $scope.questions[$scope.questionIndex];
+                }else{
+                    $scope.getFinalResult();
+                }
             }, function errorCallback(response) {
                 console.log(response);
             });
         };
 
-        $scope.getTest();
+        $scope.getFinalResult = function(data, index) {
+            $http({
+                method: 'get',
+                url: basePath + 'results',
+                params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
+            }).then(function successCallback(response) {
+                $scope.result = response.data.results.result;
+                $scope.isFinished = true;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+        }
+
+        $scope.$watch('isFinished', function(value) {
+            $scope.isStart = false;
+        });
     }])

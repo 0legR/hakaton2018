@@ -9,10 +9,18 @@
 angular.module('sbAdminApp')
 	.directive('notifications',function(){
 		return {
-        templateUrl:'scripts/directives/notifications/notifications.html',
-        restrict: 'E',
-        replace: true,
-    	}
+            templateUrl: 'scripts/directives/notifications/notifications.html',
+            restrict: 'E',
+            replace: true,
+            scope: {},
+            controller: function ($scope, $http) {
+                if (localStorage.user) {
+                    $scope.userData = JSON.parse(localStorage.user);
+                } else {
+                    $scope.userData = null;
+                }
+            }
+        }
 	});
 
 
