@@ -140,16 +140,17 @@
                     // var question_id = 31;
                     // var url = 'questions/'+ question_id +'/edit';
                     // var url = 'vacancies';
-                    var data = {
-                        name: 'alex',
-                        phone: '8(342)23456342',
-                        password: '123123',
-                        email: 'alex@gmail.com',
-                        role: 2,
-                        user_ip: '192.168.10.10',
-                    };
-                    var url = 'auth';
-                    // var id = 21;
+                    // var data = {
+                    //     name: 'alex',
+                    //     phone: '8(342)23456342',
+                    //     password: '123123',
+                    //     email: 'alex@gmail.com',
+                    //     role: 2,
+                    //     user_ip: '192.168.10.10',
+                    // };
+                    // var url = 'auth';
+                    var id = 24;
+                    var url = 'questions/' + id;
                     // var url = 'questions';
                     // var url = 'results';
 
@@ -165,25 +166,27 @@
                     //     email: 'roshen@gmail.com',
                     //     web_link: 'www.roshen.com',
                     // };
-
-                    $.post(baseUrl,
-                    data,
-                    function(data,status){
-                        console.log(data);
-                    });
-                    // $.ajax({
-                    //     url: baseUrl,
-                    //     // method: 'PUT',
-                    //     method: 'GET',
-                    //     // method: 'DELETE',
-                    //     data: data,
-                    //     success: function(result) {
-                    //         console.log(result);
-                    //     },
-                    //     error: function(request,msg,error) {
-                    //         // handle failure
-                    //     }
+                    var data = {
+                        user_id:3,
+                    }
+                    // $.post(baseUrl,
+                    // data,
+                    // function(data,status){
+                    //     console.log(data);
                     // });
+                    $.ajax({
+                        url: baseUrl,
+                        // method: 'PUT',
+                        method: 'GET',
+                        // method: 'DELETE',
+                        data: data,
+                        success: function(result) {
+                            console.log(result);
+                        },
+                        error: function(request,msg,error) {
+                            // handle failure
+                        }
+                    });
                 });
             });
 
