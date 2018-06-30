@@ -264,3 +264,9 @@ angular.module('sbAdminApp')
             });
         };
     }])
+    .controller('adminResultCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+
+    }])
+    .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+
+    }])

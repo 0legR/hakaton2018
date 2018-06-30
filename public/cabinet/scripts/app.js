@@ -284,6 +284,16 @@ angular
                 templateUrl: 'views/admin/question.html',
                 cache: false,
             })
+            .state('admin.results', {
+                url: '/results',
+                templateUrl: 'views/admin/results.html',
+                cache: false,
+            })
+            .state('admin.settings', {
+                url: '/settings',
+                templateUrl: 'views/admin/settings.html',
+                cache: false,
+            })
     }]);
 
     
