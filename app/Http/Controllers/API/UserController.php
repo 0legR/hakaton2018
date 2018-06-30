@@ -25,7 +25,7 @@ class UserController extends Controller
             if ($user->password === $request->password) {
                 if ($user->isHR()) {
                     $user['isHR'] = true;
-                } else if($user->isUser()) {
+                } else if($user->isApplicant()) {
                     $user['isApplicant'] = true;
                 } else {
                     return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);

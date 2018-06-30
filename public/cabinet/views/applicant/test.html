@@ -4,6 +4,94 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+<!-- /.row -->
 <div class="row" ng-controller="applicantTestCtrl">
-    Test почався
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info">
+                        <ul>
+                            <div style="text-align: center">
+                                <h3 style="margin: 0px">Правила</h3>
+                            </div>
+                            <dt>Час:</dt>
+                            <dd><ul><li>
+                                Тест строго регламентований у часі. Відведений час залежить від обраної вакансії, кількості
+                                та складності питань.
+                            </li></ul></dd>
+                            <dt>Допустимість:</dt>
+                            <dd><ul><li>
+                                Кожен крок тесту можна пройти тільки один раз і отримати за нього визначену кількість балів.
+                                Коригування відповідей не можливе.
+                            </li></ul></dd>
+                            <dt>Однозначність:</dt>
+                            <dd><ul><li>
+                                Тест має лише одну правильну відповідь.
+                            </li></ul></dd>
+                            <dt>Обмеження:</dt>
+                            <dd>
+                                <ul>
+                                    <li>
+                                        Усі запитання, на які не було представлено відповідь, зараховуються як виконані невірно.
+                                    </li>
+                                    <li>
+                                        Кандидат може пройти інтерв'ю на одну посаду лише один раз. Про будь-які спроби шахрайства
+                                        буде повідомлено роботодавця.
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dt>Позитивний результат:</dt>
+                            <dd><ul><li>
+                                Якщо кандидат набрав більше 70% правильних відповідей, інтерв'ю вважається пройденим успішно.
+                            </li></ul></dd>
+                            <dt>Ефект:</dt>
+                            <dd><ul><li>
+                                У випадку позитивного проходження інтерв'ю кандидату буде надано можливість додати своє резюме
+                                для наступного етапу.
+                            </li></ul></dd>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-heading">
+                Дані тесту
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="questionForm">
+                            <input class="form-control" type="hidden" ng-model="question.user_id" ng-init="question.user_id=1">
+                            <div class="form-group">
+                                <label>Вакансія</label>
+                                <select class="form-control" ng-model="question.vacancy_id" required disabled>
+                                    <option ng-repeat="option in vacancies track by $index" value="{{option.id}}">{{option.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Запитання</label>
+                                <textarea class="form-control" style="width: 100%; resize: vertical " ng-model="question.name" disabled></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Варіанти відповідей</label>
+                                <div class="radio" ng-repeat="answer in question.answers track by $index">
+                                    <div class="form-group input-group">
+                                        <input class="form-control" ng-model="answer.name" required>
+                                        <span class="input-group-addon" style="padding: 0px 10px 10px 40px;">
+                                            <input type="radio" name="answer" ng-click="setAnswer(answer)">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="sendAnswer(question)" ng-disabled="questionForm.$invalid">Відправити</button>
+                        </form>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
 </div>

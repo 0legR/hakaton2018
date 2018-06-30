@@ -22,7 +22,7 @@ class ResultController extends Controller
             $userId = $request->user_id;
             $vacancyId = $request->vacancy_id;
             $user = User::findOrFail($userId);
-            if ($user->isUser()) {
+            if ($user->isApplicant()) {
                 if ($vacancyId) {
                     $data = $this->getSingleUserResult($vacancyId, $user);
                 } else {
@@ -107,7 +107,7 @@ class ResultController extends Controller
     public function store(Request $request)
     {
         $user = User::findOrFail($request->user_id);
-        if ($user->isUser()) {
+        if ($user->isApplicant()) {
             $newResult = new Result($request->except('_token'));
             if ($newResult->validate()) {
                 $newResult->save();
