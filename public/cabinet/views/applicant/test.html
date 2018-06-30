@@ -54,55 +54,60 @@
                     </div>
                 </div>
             </div>
-            <div ng-show="!isStart && !isFinished" class="text-center start" ng-click="startTest()">
-                Почати тест <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+            <div ng-if="!userData.user.id" class="text-center">
+                <a ng-href="#/login">Спочатку авторизуйся</a>
             </div>
-            <div ng-show="isStart && !isFinished">
-                <div class="panel-heading">
-                    Дані тесту
+            <div ng-if="userData.user.id">
+                <div ng-show="!isStart && !isFinished" class="text-center start" ng-click="startTest()">
+                    Почати тест <i class="fa fa-play-circle-o" aria-hidden="true"></i>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form role="form" name="questionForm">
-                                <input class="form-control" type="hidden" ng-model="question.user_id" ng-init="question.user_id=userData.user.id">
-                                <div class="form-group">
-                                    <label>Вакансія</label>
-                                    <select class="form-control" ng-model="currentQuestion.vacancy_id" required disabled>
-                                        <option ng-repeat="option in vacancies track by $index" value="{{option.id}}">{{option.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Запитання</label>
-                                    <textarea class="form-control" style="width: 100%; resize: vertical " ng-model="currentQuestion.name" disabled></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Варіанти відповідей</label>
-                                    <div class="radio" ng-repeat="answer in currentQuestion.answers track by $index">
-                                        <div class="form-group input-group">
-                                            <input class="form-control" ng-model="answer.name" required disabled>
-                                            <span class="input-group-addon" style="padding: 0px 10px 10px 40px;">
+                <div ng-show="isStart && !isFinished">
+                    <div class="panel-heading">
+                        Дані тесту
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form role="form" name="questionForm">
+                                    <input class="form-control" type="hidden" ng-model="question.user_id" ng-init="question.user_id=userData.user.id">
+                                    <div class="form-group">
+                                        <label>Вакансія</label>
+                                        <select class="form-control" ng-model="currentQuestion.vacancy_id" required disabled>
+                                            <option ng-repeat="option in vacancies track by $index" value="{{option.id}}">{{option.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Запитання</label>
+                                        <textarea class="form-control" style="width: 100%; resize: vertical " ng-model="currentQuestion.name" disabled></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Варіанти відповідей</label>
+                                        <div class="radio" ng-repeat="answer in currentQuestion.answers track by $index">
+                                            <div class="form-group input-group">
+                                                <input class="form-control" ng-model="answer.name" required disabled>
+                                                <span class="input-group-addon" style="padding: 0px 10px 10px 40px;">
                                             <input type="radio" name="answer" ng-click="setAnswer(answer)">
                                         </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <button type="submit" class="btn btn-default" ng-click="sendAnswer(currentQuestion, questionIndex)" ng-disabled="questionForm.$invalid">Відправити</button>
-                            </form>
+                                    <button type="submit" class="btn btn-default" ng-click="sendAnswer(currentQuestion, questionIndex)" ng-disabled="questionForm.$invalid">Відправити</button>
+                                </form>
+                            </div>
+                            <!-- /.row (nested) -->
                         </div>
-                        <!-- /.row (nested) -->
+                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-            </div>
-            <div class="panel-body" ng-show="isFinished">
-                <div class="alert alert-success alert-dismissable" >
-                    Вітаємо, ви пройшли тест. Кількість успішних відповідей становить <strong>{{result}} %</strong>
-                    <div ng-show="result>=70">
-                        Ви можете прикріпити Ваше резюме роботодавцю: <em ng-click="attachCV=!attachCV" style="cursor: pointer">прикріпити</em>
-                        <div ng-show="attachCV">
-                            <input type="file" style="display: inline-block">
-                            <button type="button" class="btn btn-primary btn-xs" style="display: inline-block" ng-click="attachCV=false">Відправити</button>
+                <div class="panel-body" ng-show="isFinished">
+                    <div class="alert alert-success alert-dismissable" >
+                        Вітаємо, ви пройшли тест. Кількість успішних відповідей становить <strong>{{result}} %</strong>
+                        <div ng-show="result>=70">
+                            Ви можете прикріпити Ваше резюме роботодавцю: <em ng-click="attachCV=!attachCV" style="cursor: pointer">прикріпити</em>
+                            <div ng-show="attachCV">
+                                <input type="file" style="display: inline-block">
+                                <button type="button" class="btn btn-primary btn-xs" style="display: inline-block" ng-click="attachCV=false">Відправити</button>
+                            </div>
                         </div>
                     </div>
                 </div>

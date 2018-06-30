@@ -392,7 +392,7 @@ angular.module('sbAdminApp')
     }])
     .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
         $scope.isStart = false;
-        $scope.isFinished = true;
+        $scope.isFinished = false;
         $scope.selectedAnswer = null;
 
         $scope.isStartByUser = function() {
@@ -408,7 +408,10 @@ angular.module('sbAdminApp')
                 console.log(response);
             });
         };
-        $scope.isStartByUser();
+
+        if($rootScope.userData){
+            $scope.isStartByUser();
+        }
 
         $scope.startTest = function() {
             $scope.isStart = true;
@@ -489,5 +492,5 @@ angular.module('sbAdminApp')
             });
 
         }
-        $scope.getFinalResult();
+        // $scope.getFinalResult();
     }])
