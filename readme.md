@@ -320,6 +320,48 @@ result:20
 user:{id: 1, name: "0leg", phone: "8(342)23412342", email: "qwert@gmail.com", role: 1}
 vacancy:{id: 1, name: "developer", status: 1,…}}
 
+#--------------isUserPassedTest----------------
+#-----------------by question------------------
+var data = {
+    user_id:1,
+    question_id:33,
+}
+var url = 'passed_result';
+var baseUrl = 'http://php_server.ua/api/' + url;
+method: 'GET',
+return json [{id: 16, question_id: 33, user_id: 1, answer_id: 52, vacancy_id: 1}]
+
+#------------------by vacancy-------------------
+var data = {
+    user_id:1,
+    vacancy_id:6,
+}
+var url = 'passed_result';
+var baseUrl = 'http://php_server.ua/api/' + url;
+method: 'GET',
+return json 
+result
+:
+[{id: 6, question_id: 23, user_id: 1, answer_id: 10, vacancy_id: 6},…]
+0
+:
+{id: 6, question_id: 23, user_id: 1, answer_id: 10, vacancy_id: 6}
+1
+:
+{id: 7, question_id: 24, user_id: 1, answer_id: 14, vacancy_id: 6}
+2
+:
+{id: 8, question_id: 25, user_id: 1, answer_id: 20, vacancy_id: 6}
+3
+:
+{id: 9, question_id: 26, user_id: 1, answer_id: 21, vacancy_id: 6}
+4
+:
+{id: 10, question_id: 27, user_id: 1, answer_id: 27, vacancy_id: 6}
+5
+:
+{id: 11, question_id: 28, user_id: 1, answer_id: 31, vacancy_id: 6}
+
 #-----------------Company------------------
 #--------------store----------------
 var data = {

@@ -23,5 +23,5 @@ Route::resource('vacancies', 'API\VacancyController', ['except' => ['create', 's
 Route::resource('questions', 'API\QuestionController', ['except' => ['create']]);
 Route::resource('results', 'API\ResultController', ['only' => ['index', 'store']]);
 Route::resource('companies', 'API\CompanyController', ['except' => ['create', 'show']]);
-
+Route::get('passed_result', 'API\ResultController@isUserPassedTest');
 

@@ -118,4 +118,24 @@ class ResultController extends Controller
         }
         return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
+
+    public function isUserPassedTest(Request $request)
+    {
+        if($request->all()) {
+            $user = User::findOrFail($request->user_id);
+            if ($user->isApplicant()) {
+                $vacancyId = $request->vacancy_id;
+                $questionId = $request->question_id;
+                if ($vacancyId) {
+                    $result = Result::byUserAndVacancy($user->id, $vacancyId)->get();
+                } else if($questionId) {
+                    $result = Result::byUserAndQuestion($user->id, $questionId)->get();
+                }
+                return response()->json(compact('result'), 200);
+            }
+            return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
+        }
+        return response()->json(['error' => User::RESPONSE_EMPTY], 204);
+
+    }
 }

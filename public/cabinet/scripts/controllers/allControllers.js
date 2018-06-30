@@ -40,6 +40,7 @@ angular.module('sbAdminApp')
         }
 
         $scope.loggout = function() {
+            console.log(localStorage);
             var userData = JSON.parse(localStorage.user);
             if (userData !== null) {
                 localStorage.removeItem("user");

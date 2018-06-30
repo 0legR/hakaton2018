@@ -49,6 +49,14 @@ class Result extends Model
         return $query->where('user_id', $id);
     }
 
+    public function scopeByUserAndVacancy($query, $userId, $vacancyId) {
+        return $query->where('user_id', $userId)->where('vacancy_id', $vacancyId);
+    }
+
+    public function scopeByUserAndQuestion($query, $userId, $questionId) {
+        return $query->where('user_id', $userId)->where('question_id', $questionId);
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');
