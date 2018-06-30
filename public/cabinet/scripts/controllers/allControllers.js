@@ -33,9 +33,9 @@ angular.module('sbAdminApp')
                 $rootScope.userData = null;
             }
             if (userData.user.hasOwnProperty('isHR')) {
-                location.href="#admin.dashboard";
+                location.href="#admin/dashboard";
             } else if (userData.user.hasOwnProperty('isApplicant')) {
-               location.href="#applicant/vacanies";
+               location.href="#applicant/vacancies";
             }
         }
 
@@ -310,7 +310,23 @@ angular.module('sbAdminApp')
         $scope.vacanciesList();
     }])
     .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
+        $scope.isStart = false;
         $scope.selectedAnswer = null;
+
+        $scope.isStartByUser = function() {
+            $http({
+                method: 'get',
+                url: basePath + 'questions',
+                params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
+            }).then(function successCallback(response) {
+                if(response.data){
+                    $scope.isStart = true
+                }
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+
         $scope.getTest = function() {
             $http({
                 method: 'get',
