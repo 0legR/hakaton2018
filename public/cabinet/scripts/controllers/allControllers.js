@@ -62,6 +62,8 @@ angular.module('sbAdminApp')
             });
         }
     }])
+
+    //admin controllers
     .controller('adminCtrl', ['$scope', '$http', '$state','$location', '$q', function ($scope, $http, $state, $location, $q) {
         $scope.vacanciesList = function(data) {
             var promise = $http({
@@ -133,7 +135,6 @@ angular.module('sbAdminApp')
         var method = 'post';
 
         if($stateParams.id){
-            var method = 'put';
             $http({
                 method: 'get',
                 url: basePath + 'vacancies/'+ $stateParams.id +'/edit',
@@ -213,11 +214,18 @@ angular.module('sbAdminApp')
         $scope.question = {};
         $scope.question.answers = [
             {name:'',status:1},
-            {name:'',status:1},
-            {name:'',status:1},
-            {name:'',status:1},
-            {name:'',status:1},
+            {name:'',status:0},
+            {name:'',status:0},
+            {name:'',status:0},
+            {name:'',status:0},
         ];
+
+        $scope.setDefault = function(answer) {
+            angular.forEach($scope.question.answers, function(a) {
+                a.status = 0; //set them all to false
+            });
+            answer.status = 1; //set the clicked one to true
+        };
 
         $http({
             method: 'get',
@@ -225,34 +233,92 @@ angular.module('sbAdminApp')
             params: {user_id:1}
         }).then(function successCallback(response) {
             $scope.vacancies = response.data.vacancies;
+            if($stateParams.id){
+                $scope.getQuestion();
+            }
         }, function errorCallback(response) {
             console.log(response);
         });
 
-        if($stateParams.id){
+        $scope.getQuestion = function() {
             $http({
                 method: 'get',
-                url: basePath + 'questions/'+ $stateParams.id +'/edit',
+                url: basePath + 'questions/' + $stateParams.id + '/edit',
                 params: {user_id: 1}
             }).then(function successCallback(response) {
-                console.log(response)
                 $scope.question = response.data.question;
+                $scope.question.user_id = 1;
             }, function errorCallback(response) {
                 console.log(response);
             });
         }
 
+        $scope.sendQuestion = function(data) {
+            if($stateParams.id){
+                $scope.updateQuestion($stateParams.id, data);
+            }else{
+                $scope.createQuestion(data);
+            }
+        };
         $scope.createQuestion = function(data) {
-            console.log(data)
             $http({
                 method: 'post',
                 url: basePath + 'questions',
                 data: data
             }).then(function successCallback(response) {
-                console.log(response)
                 $state.go("admin.questions", {}, {reload: true});
             }, function errorCallback(response) {
                 console.log(response);
             });
         };
+        $scope.updateQuestion = function(id, data) {
+            console.log(data);
+            $http({
+                method: 'put',
+                url: basePath + 'questions/'+id,
+                data: data
+            }).then(function successCallback(response) {
+                $state.go("admin.questions", {}, {reload: true});
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+    }])
+    .controller('adminResultCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+
+    }])
+    .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+
+    }])
+
+    //applicant controllers
+    .controller('applicantVacanciesCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.vacanciesList = function(data) {
+            $http({
+                method: 'get',
+                url: basePath + 'vacancies',
+            }).then(function successCallback(response) {
+                console.log(response)
+                $scope.vacancies = response.data.vacancies;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+        $scope.vacanciesList();
+    }])
+    .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
+        $scope.getTest = function() {
+            $http({
+                method: 'get',
+                url: basePath + 'questions',
+                params: {user_id: 1, vacancy_id: 5}
+            }).then(function successCallback(response) {
+                console.log(response)
+                $scope.vacancies = response.data.vacancies;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+
+        $scope.getTest();
     }])
