@@ -197,10 +197,13 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
+            <li ng-if="userData.user">
+                <a ng-click="companyProfile()"><i class="fa fa-user fa-fw"></i> Company Profile</a>
+            </li>
             <li ng-if="userData.user.name">
                 <a href="#"><i class="fa fa-user fa-fw"></i> {{userData.user.name}}</a>
             </li>
-            <li ng-if="userData.user.name" class="divider"></li>
+            <li class="divider" ng-if="userData.user"></li>
             <li ng-if="!userData.user">
                 <a ng-href="#/login"><i class="fa fa-sign-in fa-fw"></i> Login</a>
             </li>

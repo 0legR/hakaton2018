@@ -165,24 +165,25 @@
                     //     email: 'roshen@gmail.com',
                     //     web_link: 'www.roshen.com',
                     // };
-                    // var data = {
-                    //     user_id:3,
-                    // }
+                    var data = {
+                        user_id:3,
+                    }
                     // $.post(baseUrl,
                     // data,
                     // function(data,status){
                     //     console.log(data);
                     // });
-                    var data = {
-                        user_id:1,
-                        vacancy_id:6,
-                    }
+                    // var data = {
+                    //     user_id:1,
+                    //     vacancy_id:6,
+                    // }
                     // var data = {
                     //     user_id:1,
                     //     question_id:33,
                     // }
-                    var url = 'passed_result';
-
+                    // var url = 'passed_result';
+                    var id = 10;
+                    var url = 'vacancies/' + id;
                     var baseUrl = 'http://php_server.ua/api/' + url;
 
                     $.ajax({

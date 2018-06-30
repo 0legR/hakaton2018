@@ -89,6 +89,18 @@ var baseUrl = 'http://php_server.ua/api/' + url;
 return json 
     vacancy:
         {id: 7, name: "chef", status: 1, test_time: 60, created_by: 5}
+#------------show-----------------
+#-------------isApplicant---------
+var data = {
+    user_id:3,
+}
+method: 'GET';
+var id = 10;
+var url = 'vacancies/' + id;
+var baseUrl = 'http://php_server.ua/api/' + url;
+
+return json vacancy
+{id: 10, name: "astronaut", status: 0, test_time: 180, user_id: 1}
 #-----------update--------
 var data = {
     user_id:5,
