@@ -19,8 +19,8 @@ class QuestionController extends Controller
     public function index(Request $request)
     {
         if($request->all()) {
-            // $user = User::findOrFail($request->user_id);
-            // if ($user->isHR()) {
+            $user = User::findOrFail($request->user_id);
+            if ($user->isHR() || $user->isApplicant()) {
                 if ($request->vacancy_id) {
                     $questions = Question::with('answers')->byVacancy($request->vacancy_id)->get();
                 } else {
@@ -37,7 +37,7 @@ class QuestionController extends Controller
                     ]);
                 } 
                 return response()->json(['error' => Question::RESPONSE_EMPTY, 'status' => 204]);
-            // }
+            }
         }
         return response()->json(['error' => Question::RESPONSE_EMPTY, 'status' => 204]);
     }
