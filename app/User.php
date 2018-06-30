@@ -51,7 +51,7 @@ class User extends Authenticatable
         return $this->role === self::TYPE_HR;
     }
 
-    public function isUser()
+    public function isApplicant()
     {
         return $this->role === self::TYPE_USER;
     }
