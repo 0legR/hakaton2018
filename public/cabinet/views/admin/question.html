@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <form role="form" name="questionForm">
-                            <input class="form-control" type="hidden" ng-model="question.user_id" ng-init="question.user_id=1">
+                            <input class="form-control" type="hidden" ng-model="question.user_id" ng-init="question.user_id=userData.user.id">
                             <div class="form-group">
                                 <label>Вакансія</label>
                                 <select class="form-control" ng-model="question.vacancy_id" required ng-disabled="question.id">

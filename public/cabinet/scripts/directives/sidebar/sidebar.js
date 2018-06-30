@@ -39,11 +39,11 @@ angular.module('sbAdminApp')
         $http.get('../cabinet/scripts/json/user_data.json').success(function (response) {
             $scope.data = response;
         });
-          if(localStorage.user){
-              $scope.userData = JSON.parse(localStorage.user);
-          }else{
-              $scope.userData = null;
-          }
+        if(localStorage.user){
+            $scope.userData = JSON.parse(localStorage.user);
+        }else{
+            $scope.userData = null;
+        }
       }
     }
   }]);
