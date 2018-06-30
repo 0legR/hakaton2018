@@ -19,7 +19,7 @@ class QuestionController extends Controller
     public function index(Request $request)
     {
         if($request->all()) {
-            $user = User::findOrFail($request->user_id);
+            // $user = User::findOrFail($request->user_id);
             // if ($user->isHR()) {
                 if ($request->vacancy_id) {
                     $questions = Question::with('answers')->byVacancy($request->vacancy_id)->get();
