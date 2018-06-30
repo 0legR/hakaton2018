@@ -19,9 +19,9 @@ class CompanyController extends Controller
         if($request->all()) {
             $user = User::findOrFail($request->user_id);
             if ($user->isHR()) {
-                $company = Company::byCreator($user->id)->get();
-                if ($company->count() > 0) {
-                    return response()->json(compact('company'), 200);
+                $companies = Company::byCreator($user->id)->get();
+                if ($companies->count() > 0) {
+                    return response()->json(compact('companies'), 200);
                 } else {
                     return response()->json(['error' => Company::RESPONSE_EMPTY, 'status' => 204]);
                 }
@@ -66,9 +66,18 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR()) {
+            $company = Company::findOrFail($id);
+            if ($company->count() > 0) {
+                return response()->json(compact('company'), 201);
+            } else {
+                return response()->json(['error' => strval($company->errorMessages)], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -80,7 +89,18 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR()) {
+            $company = Company::findOrFail($id);
+            $company->fill($request->except('_token'));
+            if ($company->validate()) {
+                $company->save();
+                return response()->json(['success' => Company::RESPONSE_SUCCESS], 201);
+            } else {
+                return response()->json(['error' => strval($company->errorMessages)], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -89,8 +109,16 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR()) {
+            if (Company::destroy($id)) {
+                return response()->json(['success' => Company::RESPONSE_DESTROY], 201);
+            } else {
+                return response()->json(['error' => Company::RESPONSE_UNDESTROY], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 }

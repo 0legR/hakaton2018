@@ -303,6 +303,16 @@ angular
                 templateUrl: 'views/admin/settings.html',
                 cache: false,
             })
+            .state('admin.company', {
+                url: "/company/:id",
+                templateUrl: 'views/admin/company.html',
+                cache: false,
+            })
+            .state('admin.company_form', {
+                url: "/company",
+                templateUrl: 'views/admin/company.html',
+                cache: false,
+            })
 
             //applicant routes
             .state('applicant', {
