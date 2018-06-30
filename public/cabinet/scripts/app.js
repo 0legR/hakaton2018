@@ -183,6 +183,8 @@ angular
                 url: '/test'
             })
 
+
+            //admin routes
             .state('admin', {
                 url: '/admin',
                 templateUrl: 'views/admin/main.html',
@@ -294,6 +296,95 @@ angular
                 templateUrl: 'views/admin/settings.html',
                 cache: false,
             })
+
+            //applicant routes
+            .state('applicant', {
+                url: '/applicant',
+                templateUrl: 'views/applicant/main.html',
+                cache: false,
+                resolve: {
+                    loadMyDirectives: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/directives/header/header.js',
+                                    'scripts/directives/header/header-notification/header-notification.js',
+                                    'scripts/directives/sidebar/sidebar.js',
+                                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                                ]
+                            }),
+                            $ocLazyLoad.load(
+                                {
+                                    name: 'toggle-switch',
+                                    files: ["bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
+                                        "bower_components/angular-toggle-switch/angular-toggle-switch.css"
+                                    ]
+                                }),
+                            $ocLazyLoad.load(
+                                {
+                                    name: 'ngAnimate',
+                                    files: ['bower_components/angular-animate/angular-animate.js']
+                                })
+                        $ocLazyLoad.load(
+                            {
+                                name: 'ngCookies',
+                                files: ['bower_components/angular-cookies/angular-cookies.js']
+                            })
+                        $ocLazyLoad.load(
+                            {
+                                name: 'ngResource',
+                                files: ['bower_components/angular-resource/angular-resource.js']
+                            })
+                        $ocLazyLoad.load(
+                            {
+                                name: 'ngSanitize',
+                                files: ['bower_components/angular-sanitize/angular-sanitize.js']
+                            })
+                        $ocLazyLoad.load(
+                            {
+                                name: 'ngTouch',
+                                files: ['bower_components/angular-touch/angular-touch.js']
+                            })
+                    }
+                }
+            })
+            .state('applicant.vacancies', {
+                url: '/vacancies',
+                templateUrl: 'views/applicant/vacancies.html',
+                cache: false,
+            })
+            .state('applicant.test', {
+                url: "/test/:id",
+                templateUrl: 'views/applicant/test.html',
+                cache: false,
+            })
+
+            // .state('admin.questions', {
+            //     url: "/questions",
+            //     templateUrl: 'views/admin/questions.html',
+            //     cache: false,
+            // })
+            // .state('admin.question', {
+            //     url: "/question/:id",
+            //     templateUrl: 'views/admin/question.html',
+            //     cache: false,
+            // })
+            // .state('admin.question_form', {
+            //     url: "/question",
+            //     templateUrl: 'views/admin/question.html',
+            //     cache: false,
+            // })
+            // .state('admin.results', {
+            //     url: '/results',
+            //     templateUrl: 'views/admin/results.html',
+            //     cache: false,
+            // })
+            // .state('admin.settings', {
+            //     url: '/settings',
+            //     templateUrl: 'views/admin/settings.html',
+            //     cache: false,
+            // })
     }]);
 
     

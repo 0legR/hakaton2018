@@ -7,16 +7,6 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('vacancyCtrl', ['$scope', '$http', function ($scope, $http) {
-        $scope.vacancies = [
-            {name: 'JS'},
-            {name: 'C++'},
-            {name: 'Повар'}
-        ];
-    }])
-    .controller('testCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
-
-    }])
     .controller('registrationCtrl', ['$scope', '$http', '$state','$location', function ($scope, $http, $state, $location) {
         $scope.auth_data = {};
         $scope.loggin = function(data){
@@ -44,6 +34,8 @@ angular.module('sbAdminApp')
             });
         }
     }])
+
+    //admin controllers
     .controller('adminCtrl', ['$scope', '$http', '$state','$location', '$q', function ($scope, $http, $state, $location, $q) {
         $scope.vacanciesList = function(data) {
             var promise = $http({
@@ -269,4 +261,36 @@ angular.module('sbAdminApp')
     }])
     .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
 
+    }])
+
+    //applicant controllers
+    .controller('applicantVacanciesCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.vacanciesList = function(data) {
+            $http({
+                method: 'get',
+                url: basePath + 'vacancies',
+            }).then(function successCallback(response) {
+                console.log(response)
+                $scope.vacancies = response.data.vacancies;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+        $scope.vacanciesList();
+    }])
+    .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
+        $scope.getTest = function() {
+            $http({
+                method: 'get',
+                url: basePath + 'questions',
+                params: {user_id: 1, vacancy_id: 5}
+            }).then(function successCallback(response) {
+                console.log(response)
+                $scope.vacancies = response.data.vacancies;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+
+        $scope.getTest();
     }])
