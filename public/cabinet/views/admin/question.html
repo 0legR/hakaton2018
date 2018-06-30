@@ -18,7 +18,7 @@
                             <input class="form-control" type="hidden" ng-model="question.user_id" ng-init="question.user_id=1">
                             <div class="form-group">
                                 <label>Вакансія</label>
-                                <select class="form-control" ng-model="question.vacancy_id" required>
+                                <select class="form-control" ng-model="question.vacancy_id" required ng-disabled="question.id">
                                     <option value="">---Оберіть вакансію---</option>
                                     <option ng-repeat="option in vacancies track by $index" value="{{option.id}}">{{option.name}}</option>
                                 </select>
@@ -29,23 +29,21 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="question.status">Опубліковано
+                                    <input type="checkbox" ng-model="question.status"  ng-true-value=1 ng-false-value=0>Опубліковано
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>Варіанти відповідей</label>
                                 <div class="radio" ng-repeat="answer in question.answers track by $index">
                                     <div class="form-group input-group">
-                                        <input class="form-control" ng-model="answer.name">
+                                        <input class="form-control" ng-model="answer.name" required>
                                         <span class="input-group-addon" style="padding: 0px 10px 10px 40px;">
-                                            <input type="radio" value="answer.id" ng-model="answer.status" data-ng-value="1">
+                                            <input type="radio" name="answer" ng-click="setDefault(answer)" ng-checked="answer.status">
                                         </span>
-                                        <!--<input type="radio" name="response" data-ng-model="choice.isUserAnswer" data-ng-value="true" />-->
-                                        <!--{{choice.text}}-->
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-default" ng-click="createQuestion(question)" ng-disabled="questionForm.$invalid">Зберегти</button>
+                            <button type="submit" class="btn btn-default" ng-click="sendQuestion(question)" ng-disabled="questionForm.$invalid">Зберегти</button>
                         </form>
                     </div>
                     <!-- /.row (nested) -->
