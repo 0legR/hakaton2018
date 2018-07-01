@@ -43,4 +43,8 @@ class Score extends Model
             $this->errorMessages = $validator->messages();                   
         return $validator->passes();
     }
+
+    public function scopeByVacancy($query, $vacancy_name) {
+        return $query->where('vacancy_name', $vacancy_name);
+    }
 }
