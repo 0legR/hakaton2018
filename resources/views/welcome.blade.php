@@ -165,14 +165,30 @@
                     //     email: 'roshen@gmail.com',
                     //     web_link: 'www.roshen.com',
                     // };
+                    // var data = {
+                    //     user_id:3,
+                    // }
+
                     var data = {
-                        user_id:3,
-                    }
-                    // $.post(baseUrl,
-                    // data,
-                    // function(data,status){
-                    //     console.log(data);
-                    // });
+                        user_id:5,
+                        test_time: 180,
+                        company_name: 'obolon',
+                        city: 'kyiv',
+                        vacancy: 'beer_maker',
+                        vacancy_level: 'junior',
+                        technoligy: 'european',
+                        questions_amount: 100,
+                        complexity_level: 'middle',
+                    };
+
+                    var url = 'orders';
+
+                    var baseUrl = 'http://php_server.ua/api/' + url;
+                    $.post(baseUrl,
+                    data,
+                    function(data,status){
+                        console.log(data);
+                    });
                     // var data = {
                     //     user_id:1,
                     //     vacancy_id:6,
@@ -182,23 +198,25 @@
                     //     question_id:33,
                     // }
                     // var url = 'passed_result';
-                    var id = 10;
-                    var url = 'vacancies/' + id;
-                    var baseUrl = 'http://php_server.ua/api/' + url;
+                    
+                    // var id = 10;
+                    // var url = 'vacancies/' + id;
 
-                    $.ajax({
-                        url: baseUrl,
-                        // method: 'PUT',
-                        method: 'GET',
-                        // method: 'DELETE',
-                        data: data,
-                        success: function(result) {
-                            console.log(result);
-                        },
-                        error: function(request,msg,error) {
-                            // handle failure
-                        }
-                    });
+                   
+
+                    // $.ajax({
+                    //     url: baseUrl,
+                    //     // method: 'PUT',
+                    //     method: 'GET',
+                    //     // method: 'DELETE',
+                    //     data: data,
+                    //     success: function(result) {
+                    //         console.log(result);
+                    //     },
+                    //     error: function(request,msg,error) {
+                    //         // handle failure
+                    //     }
+                    // });
                 });
             });
 

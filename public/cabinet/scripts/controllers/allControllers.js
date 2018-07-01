@@ -32,7 +32,7 @@ angular.module('sbAdminApp')
             }else{
                 $rootScope.userData = null;
             }
-            if (userData.user.hasOwnProperty('isHR')) {
+            if (userData.user.hasOwnProperty('isHR') || userData.user.hasOwnProperty('isAdmin')) {
                 location.href="#admin/dashboard";
             } else if (userData.user.hasOwnProperty('isApplicant')) {
                location.href="#applicant/vacancies";
@@ -97,12 +97,42 @@ angular.module('sbAdminApp')
             return promise;
         };
 
+        $scope.ordersList = function(data) {
+            var promise = $http({
+                method: 'get',
+                url: basePath + 'orders',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                return response.data.orders ? response.data.orders.length : 0;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            return promise;
+        };
+
+        $scope.companiesList = function(data) {
+            var promise = $http({
+                method: 'get',
+                url: basePath + 'companies',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                return response.data.companies ? response.data.companies.length : 0;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            return promise;
+        };
+
         $q.all([
             $scope.vacanciesList(),
             $scope.questionsList(),
+            $scope.ordersList(),
+            $scope.companiesList(),
         ]).then(function (response) {
             $scope.vacanciesCount=response[0];
             $scope.questionsCount=response[1];
+            $scope.ordersCount=response[2];
+            $scope.companiesCount=response[3];
         });
     }])
     .controller('adminVacanciesCtrl', ['$scope', '$http', '$state','$stateParams','$rootScope', function ($scope, $http, $state, $stateParams,$rootScope) {
@@ -293,6 +323,7 @@ angular.module('sbAdminApp')
     .controller('adminResultCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
 
     }])
+    // companies controller
     .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
         $scope.companies = {};
         // var method = 'post';
@@ -302,7 +333,6 @@ angular.module('sbAdminApp')
                 url: basePath + 'companies',
                 params: {user_id:$rootScope.userData.user.id}
             }).then(function successCallback(response) {
-                console.log(response.data.companies);
                 $scope.companies = response.data.companies;
             }, function errorCallback(response) {
                 console.log(response);
@@ -354,7 +384,6 @@ angular.module('sbAdminApp')
                 url: basePath + 'companies',
                 data: data
             }).then(function successCallback(response) {
-                console.log(response)
                 $state.go("admin.settings", {}, {reload: true});
             }, function errorCallback(response) {
                 console.log(response);
@@ -369,6 +398,93 @@ angular.module('sbAdminApp')
             }).then(function successCallback(response) {
                 console.log(response);
                 $state.go("admin.settings", {}, {reload: true});
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+    }])
+
+    // orders controller
+    .controller('adminOrdersCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
+        $scope.orders = {};
+        // var method = 'post';
+        $scope.ordersList = function(data) {
+            $http({
+                method: 'get',
+                url: basePath + 'orders',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                $scope.orders = response.data.orders;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+        // if ($rootScope.userData.user.hasOwnProperty('isAdmin')) {
+            $scope.ordersList();
+        // }
+        $scope.removeOrder = function(id){
+            bootbox.confirm('Дійсно видалити замовлення?', function(result) {
+                if(result){
+                    $http({
+                        method: 'DELETE',
+                        url: basePath+'orders/'+id,
+                        params: {user_id:$rootScope.userData.user.id},
+                    }).then(function successCallback(response) {
+                        $scope.ordersList();
+                    }, function errorCallback(response) {
+                        console.log(response);
+                    });
+                }
+            });
+        }
+
+        $scope.isHR = function() {
+            return $rootScope.userData.user.hasOwnProperty('isHR');
+        }
+    }])
+
+    .controller('adminOrderCtrl', ['$scope', '$http', '$state','$stateParams','$rootScope', function ($scope, $http, $state, $stateParams,$rootScope) {
+        $scope.order = {};
+        var method = 'post';
+
+        if($stateParams.id){
+            $http({
+                method: 'get',
+                url: basePath + 'orders/'+ $stateParams.id +'/edit',
+                params: {user_id: $rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                $scope.order = response.data.order;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        }
+
+        $scope.sendOrder = function(data) {
+            if($stateParams.id){
+                $scope.updateOrder($stateParams.id, data);
+            }else{
+                $scope.createOrder(data);
+            }
+        };
+        $scope.createOrder = function(data) {
+            $http({
+                method: 'post',
+                url: basePath + 'orders',
+                data: data
+            }).then(function successCallback(response) {
+                $state.go("admin.orders", {}, {reload: true});
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+
+        $scope.updateOrder = function(id, data) {
+            $http({
+                method: 'put',
+                url: basePath + 'orders/'+id,
+                params: data
+            }).then(function successCallback(response) {
+                $state.go("admin.orders", {}, {reload: true});
             }, function errorCallback(response) {
                 console.log(response);
             });
