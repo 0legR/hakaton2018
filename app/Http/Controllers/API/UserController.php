@@ -27,6 +27,8 @@ class UserController extends Controller
                     $user['isHR'] = true;
                 } else if($user->isApplicant()) {
                     $user['isApplicant'] = true;
+                } else if($user->isAdmin()) {
+                    $user['isAdmin'] = true;
                 } else {
                     return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
                 }

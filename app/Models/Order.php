@@ -50,4 +50,8 @@ class Order extends Model
             $this->errorMessages = $validator->messages();                   
         return $validator->passes();
     }
+
+    public function scopeByUserId($query, $user_id) {
+        return $query->where('user_id', $user_id);
+    }
 }

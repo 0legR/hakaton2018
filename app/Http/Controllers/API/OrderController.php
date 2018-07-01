@@ -18,14 +18,16 @@ class OrderController extends Controller
     {
        if($request->all()) {
             $user = User::findOrFail($request->user_id);
-
             if ($user->isAdmin()) {
                 $orders = Order::all();
-                if ($orders->count() > 0) {
-                    return response()->json(compact('orders'), 200);
-                } 
-                return response()->json(['error' => Order::RESPONSE_EMPTY, 'status' => 204]);
+            } else if ($user->isHR()) {
+                $orders = Order::byUserId($user->id)->get();
             }
+
+            if ($orders->count() > 0) {
+                return response()->json(compact('orders'), 200);
+            } 
+            return response()->json(['error' => Order::RESPONSE_EMPTY, 'status' => 204]);
         }
         return response()->json(['error' => Order::RESPONSE_EMPTY, 'status' => 204]);
     }
@@ -80,9 +82,18 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR() || $user->isAdmin()) {
+            $order = Order::findOrFail($id);
+            if ($order->count() > 0) {
+                return response()->json(compact('order'), 201);
+            } else {
+                return response()->json(['error' => strval($order->errorMessages)], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -94,7 +105,18 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR() || $user->isAdmin()) {
+            $order = Order::findOrFail($id);
+            $order->fill($request->except('_token'));
+            if ($order->validate()) {
+                $order->save();
+                return response()->json(['success' => Order::RESPONSE_SUCCESS], 201);
+            } else {
+                return response()->json(['error' => strval($order->errorMessages)], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 
     /**
@@ -103,8 +125,16 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        if ($user->isHR() || $user->isAdmin()) {
+            if (Order::destroy($id)) {
+                return response()->json(['success' => Order::RESPONSE_DESTROY], 201);
+            } else {
+                return response()->json(['error' => Order::RESPONSE_UNDESTROY], 418);
+            }
+        }
+        return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
     }
 }
