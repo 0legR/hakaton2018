@@ -445,7 +445,7 @@ return
 #----------------index from hr-------
 var data = {
     user_id:5,
-    vacancy_name: "attorney"
+    vacancy_id: 5
 }
 var url = 'scores';
 method: 'get';
