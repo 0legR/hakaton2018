@@ -110,6 +110,19 @@ angular.module('sbAdminApp')
             return promise;
         };
 
+        $scope.resultsList = function(data) {
+            var promise = $http({
+                method: 'get',
+                url: basePath + 'results',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                return response.data.results?response.data.results.length:0;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            return promise;
+        };
+
         $scope.companiesList = function(data) {
             var promise = $http({
                 method: 'get',
@@ -128,11 +141,13 @@ angular.module('sbAdminApp')
             $scope.questionsList(),
             $scope.ordersList(),
             $scope.companiesList(),
+            $scope.resultsList(),
         ]).then(function (response) {
             $scope.vacanciesCount=response[0];
             $scope.questionsCount=response[1];
             $scope.ordersCount=response[2];
             $scope.companiesCount=response[3];
+            $scope.resultsCount=response[4];
         });
     }])
     .controller('adminVacanciesCtrl', ['$scope', '$http', '$state','$stateParams','$rootScope', function ($scope, $http, $state, $stateParams,$rootScope) {
@@ -253,7 +268,6 @@ angular.module('sbAdminApp')
             {name:'',status:0},
             {name:'',status:0},
             {name:'',status:0},
-            {name:'',status:0},
         ];
 
         $scope.setDefault = function(answer) {
@@ -321,7 +335,19 @@ angular.module('sbAdminApp')
         };
     }])
     .controller('adminResultCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
-
+        $scope.resultsList = function(data) {
+            $http({
+                method: 'get',
+                url: basePath + 'results',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                console.log(response);
+                $scope.results = response.data.results;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+        $scope.resultsList();
     }])
     // companies controller
     .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
@@ -506,10 +532,35 @@ angular.module('sbAdminApp')
         };
         $scope.vacanciesList();
     }])
-    .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
+    .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams','$timeout', function ($scope, $http,$rootScope,$stateParams,$timeout) {
         $scope.isStart = false;
         $scope.isFinished = false;
         $scope.selectedAnswer = null;
+        var timer;
+        $scope.stopCounter = function() {
+            $timeout.cancel(timer);
+        };
+        var updateCounter = function() {
+            if($scope.counter>1){
+                $scope.counter--;
+            }else{
+                $scope.counter = 'Час вийшов';
+                $scope.getFinalResult();
+                $scope.stopCounter();
+            }
+            timer = $timeout(updateCounter, 1000);
+        };
+
+        $http({
+            method: 'get',
+            url: basePath + 'vacancies/'+$stateParams.id,
+            params: {user_id: $rootScope.userData.user.id}
+        }).then(function successCallback(response) {
+            $scope.vacancy = response.data.vacancy;
+            $scope.counter = $scope.vacancy.test_time*60;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
 
         $scope.isStartByUser = function() {
             $http({
@@ -532,29 +583,16 @@ angular.module('sbAdminApp')
 
         $scope.startTest = function() {
             $scope.isStart = true;
+            updateCounter();
             $scope.getTest();
-            // $http({
-            //     method: 'get',
-            //     url: basePath + 'passed_result',
-            //     params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
-            // }).then(function successCallback(response) {
-            //     if(response.data.result.length){
-            //         $scope.isStart = true
-            //     }
-            // }, function errorCallback(response) {
-            //     console.log(response);
-            // });
         };
 
         $scope.getTest = function() {
-            // console.log($rootScope.userData.user.id);
-            // console.log($stateParams.id);
             $http({
                 method: 'get',
                 url: basePath + 'questions',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
-                console.log(response);
                 $scope.vacancies = response.data.vacancies;
                 $scope.questions = response.data.questions;
                 //todo get empty status from api
@@ -596,14 +634,32 @@ angular.module('sbAdminApp')
             });
         };
 
-        $scope.getFinalResult = function(data, index) {
+        $scope.getFinalResult = function() {
             $http({
                 method: 'get',
                 url: basePath + 'results',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
+                $http({
+                    method: 'get',
+                    url: basePath + 'questions',
+                    params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
+                }).then(function successCallback(data) {
+                    var questionsCount = data.data.questions.length;
+                    var myAnswers = 0;
+                    angular.forEach(response.data.results.vacancy.results, function(value, key) {
+                        if(value.user_id==$rootScope.userData.user.id){
+                            myAnswers++;
+                        }
+                    });
+                    //recalculate result with not answered questions
+                    $scope.result = ($scope.result*myAnswers)/questionsCount;
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
                 $scope.result = response.data.results.result;
                 $scope.isFinished = true;
+                $scope.stopCounter();
             }, function errorCallback(response) {
                 console.log(response);
             });

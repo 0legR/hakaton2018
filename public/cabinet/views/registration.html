@@ -6,19 +6,19 @@
                     <h3 class="panel-title">Реєстрація</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" name="registrationForm">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Ім'я" name="name" type="text" autofocus ng-model="auth_data.name">
+                                <input class="form-control" placeholder="Ім'я" name="name" type="text" autofocus ng-model="auth_data.name" required>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Телефон" name="phone" type="text" value="" ng-model="auth_data.phone">
+                                <input class="form-control" placeholder="Телефон" name="phone" type="text" value="" ng-model="auth_data.phone" required>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus ng-model="auth_data.email">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus ng-model="auth_data.email" required>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="auth_data.password">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="auth_data.password" required minlength="6">
                             </div>
                             <div class="form-group">
                                 <label>Ваша роль</label>
@@ -29,7 +29,7 @@
                                     <input type="radio" name="optionsRadiosInline" ng-model="auth_data.role" ng-value="2">Роботодавець
                                 </label>
                             </div>
-                            <button class="btn btn-lg btn-success btn-block" ng-click="auth(auth_data)">Зареєструватися</button>
+                            <button class="btn btn-lg btn-success btn-block" ng-click="auth(auth_data)" ng-disabled="registrationForm.$invalid">Зареєструватися</button>
                             <a ui-sref="login">Увійти</a>
                         </fieldset>
                     </form>
