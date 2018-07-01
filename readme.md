@@ -441,5 +441,17 @@ var baseUrl = 'http://php_server.ua/api/' + url;
 return
 {"orders":[{"id":1,"company_name":"obolon","city":"kyiv","vacancy":"beer_maker","vacancy_level":"junior","technoligy":"european","questions_amount":100,"complexity_level":"middle","test_time":"180","user_id":5}]}
 
+#---------------scores------------------------
+#----------------index from hr-------
+var data = {
+    user_id:5,
+    vacancy_name: "attorney"
+}
+var url = 'scores';
+method: 'get';
+var baseUrl = 'http://php_server.ua/api/' + url;
+
+return json 
+{"scores":[{"id":1,"user_name":"andrii","vacancy_name":"attorney","score":"70.96774193548387"},{"id":2,"user_name":"tolia","vacancy_name":"attorney","score":"70.27027027027027"}]}
 
 
