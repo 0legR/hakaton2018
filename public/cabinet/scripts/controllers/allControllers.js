@@ -395,6 +395,16 @@ angular.module('sbAdminApp')
         $scope.isFinished = false;
         $scope.selectedAnswer = null;
 
+        $http({
+            method: 'get',
+            url: basePath + 'vacancies/'+$stateParams.id,
+            params: {user_id: $rootScope.userData.user.id}
+        }).then(function successCallback(response) {
+            $scope.vacancy = response.data.vacancy;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+
         $scope.isStartByUser = function() {
             $http({
                 method: 'get',
@@ -417,22 +427,9 @@ angular.module('sbAdminApp')
         $scope.startTest = function() {
             $scope.isStart = true;
             $scope.getTest();
-            // $http({
-            //     method: 'get',
-            //     url: basePath + 'passed_result',
-            //     params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
-            // }).then(function successCallback(response) {
-            //     if(response.data.result.length){
-            //         $scope.isStart = true
-            //     }
-            // }, function errorCallback(response) {
-            //     console.log(response);
-            // });
         };
 
         $scope.getTest = function() {
-            // console.log($rootScope.userData.user.id);
-            // console.log($stateParams.id);
             $http({
                 method: 'get',
                 url: basePath + 'questions',
