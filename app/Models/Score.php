@@ -17,6 +17,9 @@ class Score extends Model
         'user_name' => 'max:200', 
         'vacancy_name' => 'max:200',
         'score' => 'max:200',
+        'user_email' => 'max:50',
+        'vacancy_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
     /**
@@ -25,7 +28,7 @@ class Score extends Model
      * @var array
      */
     protected $fillable = [
-        'score', 'user_name', 'vacancy_name',
+        'score', 'user_name', 'vacancy_name', 'user_id', 'vacancy_id', 'user_email',
     ];
 
     /**
@@ -37,14 +40,21 @@ class Score extends Model
 		'created_at', 'updated_at',
     ];
 
-    public function validate(){
+    public function validate()
+    {
         $validator = Validator::make($this->attributes, $this->rules);
         if ($validator->fails())
             $this->errorMessages = $validator->messages();                   
         return $validator->passes();
     }
 
-    public function scopeByVacancy($query, $vacancy_name) {
-        return $query->where('vacancy_name', $vacancy_name);
+    public function scopeByVacancy($query, $vacancy_id)
+    {
+        return $query->where('vacancy_id', $vacancy_id);
+    }
+
+    public function scopeByUserAndVacancy($query, $userId, $vacancyId)
+    {
+    	return $query->where('vacancy_id', $vacancy_id)->where('user_id', $userId);
     }
 }
