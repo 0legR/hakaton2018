@@ -341,13 +341,17 @@ angular.module('sbAdminApp')
                 url: basePath + 'results',
                 params: {user_id:$rootScope.userData.user.id}
             }).then(function successCallback(response) {
-                console.log(response);
                 $scope.results = response.data.results;
             }, function errorCallback(response) {
                 console.log(response);
             });
         };
         $scope.resultsList();
+
+        $scope.getRandomSpan = function(){
+            console.log(Math.random());
+            return Math.floor((Math.random()*100));
+        };
     }])
     // companies controller
     .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
@@ -628,6 +632,7 @@ angular.module('sbAdminApp')
                 $scope.questionIndex++;
                 if($scope.questionIndex<$scope.questions.length){
                     $scope.currentQuestion = $scope.questions[$scope.questionIndex];
+                    $scope.selectedAnswer = false;
                 }else{
                     $scope.getFinalResult();
                 }
