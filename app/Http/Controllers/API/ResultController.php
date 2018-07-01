@@ -149,7 +149,7 @@ class ResultController extends Controller
                 $vacancyId = $request->vacancy_id;
                 $questionId = $request->question_id;
                 if ($vacancyId) {
-                    $result = Result::byUserAndVacancy($user->id, $vacancyId)->get();
+                    $result = Score::byUserAndVacancy($user->id, $vacancyId)->get();
                 } else if($questionId) {
                     $result = Result::byUserAndQuestion($user->id, $questionId)->get();
                 }
