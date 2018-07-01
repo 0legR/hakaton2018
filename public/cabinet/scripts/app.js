@@ -313,6 +313,21 @@ angular
                 templateUrl: 'views/admin/company.html',
                 cache: false,
             })
+            .state('admin.orders', {
+                url: '/orders',
+                templateUrl: 'views/admin/orders.html',
+                cache: false,
+            })
+            .state('admin.order', {
+                url: "/order/:id",
+                templateUrl: 'views/admin/order.html',
+                cache: false,
+            })
+            .state('admin.order_form', {
+                url: "/order",
+                templateUrl: 'views/admin/order.html',
+                cache: false,
+            })
 
             //applicant routes
             .state('applicant', {
