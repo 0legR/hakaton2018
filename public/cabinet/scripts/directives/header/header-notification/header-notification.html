@@ -198,10 +198,10 @@
         </a>
         <ul class="dropdown-menu dropdown-user">
             <li ng-if="userData.user">
-                <a ng-click="companyProfile()"><i class="fa fa-user fa-fw"></i> Company Profile</a>
+                <a href="" ng-click="companyProfile()"><i class="fa fa-user fa-fw"></i> Company Profile</a>
             </li>
             <li ng-if="userData.user.name">
-                <a href="#"><i class="fa fa-user fa-fw"></i> {{userData.user.name}}</a>
+                <a href=""><i class="fa fa-user fa-fw"></i> {{userData.user.name}}</a>
             </li>
             <li class="divider" ng-if="userData.user"></li>
             <li ng-if="!userData.user">

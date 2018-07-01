@@ -506,10 +506,24 @@ angular.module('sbAdminApp')
         };
         $scope.vacanciesList();
     }])
-    .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams', function ($scope, $http,$rootScope,$stateParams) {
+    .controller('applicantTestCtrl', ['$scope', '$http','$rootScope','$stateParams','$timeout', function ($scope, $http,$rootScope,$stateParams,$timeout) {
         $scope.isStart = false;
         $scope.isFinished = false;
         $scope.selectedAnswer = null;
+        var timer;
+        $scope.stopCounter = function() {
+            $timeout.cancel(timer);
+        };
+        var updateCounter = function() {
+            if($scope.counter>1){
+                $scope.counter--;
+            }else{
+                $scope.counter = 'Час вийшов';
+                $scope.getFinalResult();
+                $scope.stopCounter();
+            }
+            timer = $timeout(updateCounter, 1000);
+        };
 
         $http({
             method: 'get',
@@ -517,6 +531,7 @@ angular.module('sbAdminApp')
             params: {user_id: $rootScope.userData.user.id}
         }).then(function successCallback(response) {
             $scope.vacancy = response.data.vacancy;
+            $scope.counter = $scope.vacancy.test_time*60;
         }, function errorCallback(response) {
             console.log(response);
         });
@@ -542,6 +557,7 @@ angular.module('sbAdminApp')
 
         $scope.startTest = function() {
             $scope.isStart = true;
+            updateCounter();
             $scope.getTest();
         };
 
@@ -551,7 +567,6 @@ angular.module('sbAdminApp')
                 url: basePath + 'questions',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
-                console.log(response);
                 $scope.vacancies = response.data.vacancies;
                 $scope.questions = response.data.questions;
                 //todo get empty status from api
@@ -593,14 +608,32 @@ angular.module('sbAdminApp')
             });
         };
 
-        $scope.getFinalResult = function(data, index) {
+        $scope.getFinalResult = function() {
             $http({
                 method: 'get',
                 url: basePath + 'results',
                 params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
             }).then(function successCallback(response) {
+                $http({
+                    method: 'get',
+                    url: basePath + 'questions',
+                    params: {user_id: $rootScope.userData.user.id, vacancy_id: $stateParams.id}
+                }).then(function successCallback(data) {
+                    var questionsCount = data.data.questions.length;
+                    var myAnswers = 0;
+                    angular.forEach(response.data.results.vacancy.results, function(value, key) {
+                        if(value.user_id==$rootScope.userData.user.id){
+                            myAnswers++;
+                        }
+                    });
+                    //recalculate result with not answered questions
+                    $scope.result = ($scope.result*myAnswers)/questionsCount;
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
                 $scope.result = response.data.results.result;
                 $scope.isFinished = true;
+                $scope.stopCounter();
             }, function errorCallback(response) {
                 console.log(response);
             });

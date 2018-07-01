@@ -63,7 +63,7 @@ class ResultController extends Controller
     {
         $questionsAmount = $results->count();
         $rightAnswersAmount = $this->getAnswers($results);
-        $persentageResult = 100 / (int)$questionsAmount * (int)$rightAnswersAmount;
+        $persentageResult = ((int)$questionsAmount * (int)$rightAnswersAmount)!=0?100 / (int)$questionsAmount * (int)$rightAnswersAmount:0;
         return [
             'vacancy' => $vacancy,
             'user' => $user,

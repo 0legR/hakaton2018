@@ -5,7 +5,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<div class="row" ng-controller="applicantTestCtrl">
+<div class="row" ng-controller="applicantTestCtrl" ng-cloak>
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="row">
@@ -65,6 +65,10 @@
                     Почати тест <i class="fa fa-play-circle-o" aria-hidden="true"></i>
                 </div>
                 <div ng-show="isStart && !isFinished">
+                    <div class="alert alert-danger" style="position: fixed;top:20px;left:20px;    z-index: 1000;">
+                        <span class="alert-link">{{counter}}</span>
+                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                    </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
