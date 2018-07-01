@@ -551,16 +551,18 @@ angular.module('sbAdminApp')
             timer = $timeout(updateCounter, 1000);
         };
 
-        $http({
-            method: 'get',
-            url: basePath + 'vacancies/'+$stateParams.id,
-            params: {user_id: $rootScope.userData.user.id}
-        }).then(function successCallback(response) {
-            $scope.vacancy = response.data.vacancy;
-            $scope.counter = $scope.vacancy.test_time*60;
-        }, function errorCallback(response) {
-            console.log(response);
-        });
+        if($rootScope.userData){
+            $http({
+                method: 'get',
+                url: basePath + 'vacancies/'+$stateParams.id,
+                params: {user_id: $rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                $scope.vacancy = response.data.vacancy;
+                $scope.counter = $scope.vacancy.test_time*60;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        }
 
         $scope.isStartByUser = function() {
             $http({
