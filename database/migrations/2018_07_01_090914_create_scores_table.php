@@ -18,6 +18,9 @@ class CreateScoresTable extends Migration
             $table->string('user_name');
             $table->string('vacancy_name');
             $table->string('score');
+            $table->string('user_email');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('vacancy_id');
             $table->timestamps();
         });
     }

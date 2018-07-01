@@ -19,9 +19,9 @@ class ScoreController extends Controller
         if($request->all()) {
             $user = User::findOrFail($request->user_id);
             if ($user->isHR()) {
-                $vacancy_name = $request->vacancy_name;
-                if($vacancy_name) {
-                    $scores = Score::byVacancy($vacancy_name)->get();
+                $vacancy_id = $request->vacancy_id;
+                if($vacancy_id) {
+                    $scores = Score::byVacancy($vacancy_id)->get();
                     return response()->json(compact('scores'), 200);    
                 }
             }
