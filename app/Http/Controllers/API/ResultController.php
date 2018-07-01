@@ -8,6 +8,7 @@ use App\User;
 use App\Models\Result;
 use App\Models\Vacancy;
 use App\Models\Answer;
+use App\Models\Score;
 
 class ResultController extends Controller
 {
@@ -30,7 +31,8 @@ class ResultController extends Controller
                 }
                 return response()->json(['results' => $data['results']], $data['status']);
             } else if ($user->isHR()) {
-                $results = $this->getAllResults();
+                // $results = $this->getAllResults();
+                $results = Score::all();
                 return response()->json(compact('results'), 200);
             }
             return response()->json(['error' => User::RESPONSE_UNREGISTERED], 401);
@@ -38,15 +40,26 @@ class ResultController extends Controller
         return response()->json(['error' => User::RESPONSE_EMPTY], 204);
     }
 
-    public function getAllResults()
+    public function storeScore($user_name, $vacancy_name, $score)
     {
-        $usersResult = Result::with('user')->select('user_id')->distinct()->get();
-        $results = [];
-        foreach ($usersResult as $user) {
-            $results[] = $this->getAllUserResults($user->user)['results'];
+        $newScore = new Score();
+        $newScore->user_name = $user_name;
+        $newScore->vacancy_name = $vacancy_name;
+        $newScore->score = $score;
+        if ($newScore->validate()) {
+            $newScore->save();
         }
-        return $results;
     }
+
+    // public function getAllResults()
+    // {
+    //     $usersResult = Result::with('user')->select('user_id')->distinct()->get();
+    //     $results = [];
+    //     foreach ($usersResult as $user) {
+    //         $results[] = $this->getAllUserResults($user->user)['results'];
+    //     }
+    //     return $results;
+    // }
 
     public function getSingleUserResult($vacancyId, $user)
     {
@@ -64,6 +77,7 @@ class ResultController extends Controller
         $questionsAmount = $results->count();
         $rightAnswersAmount = $this->getAnswers($results);
         $persentageResult = ((int)$questionsAmount * (int)$rightAnswersAmount)!=0?100 / (int)$questionsAmount * (int)$rightAnswersAmount:0;
+        $this->storeScore($user->name, $vacancy->name, $persentageResult);
         return [
             'vacancy' => $vacancy,
             'user' => $user,
@@ -79,7 +93,7 @@ class ResultController extends Controller
             foreach ($results as $result) {
                 $vacancy = Vacancy::findOrFail($result->vacancy_id);
                 $resultsByVacancy = $vacancy->results;
-                $resultsCounted[] = $this->getResultHelper($resultsByVacancy, $vacancy, $user);                
+                $resultsCounted[] = $this->getResultHelper($resultsByVacancy, $vacancy, $user);
             }
             return ['results' => $resultsCounted, 'status' => 200];
         }
