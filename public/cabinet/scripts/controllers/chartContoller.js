@@ -7,63 +7,29 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('ChartCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-    $scope.line = {
-	    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-	    series: ['Series A', 'Series B'],
-	    data: [
-	      [65, 59, 80, 81, 56, 55, 40],
-	      [28, 48, 40, 19, 86, 27, 90]
-	    ],
-	    onClick: function (points, evt) {
-	      console.log(points, evt);
-	    }
-    };
-
-    $scope.bar = {
-	    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-		series: ['Series A', 'Series B'],
-
-		data: [
-		   [65, 59, 80, 81, 56, 55, 40],
-		   [28, 48, 40, 19, 86, 27, 90]
-		]
-    	
-    };
-
-    $scope.donut = {
-    	labels: ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    	data: [300, 500, 100]
-    };
-
-    $scope.radar = {
-    	labels:["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-
-    	data:[
-    	    [65, 59, 90, 81, 56, 55, 40],
-    	    [28, 48, 40, 19, 96, 27, 100]
-    	]
-    };
-
-    $scope.pie = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    	data : [300, 500, 100]
-    };
-
-    $scope.polar = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"],
-    	data : [300, 500, 100, 40, 120]
-    };
-
-    $scope.dynamic = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"],
-    	data : [300, 500, 100, 40, 120],
-    	type : 'PolarArea',
-
-    	toggle : function () 
-    	{
-    		this.type = this.type === 'PolarArea' ?
-    	    'Pie' : 'PolarArea';
-		}
-    };
+  .controller('ChartCtrl', ['$scope', '$timeout','$rootScope','$http', function ($scope, $timeout,$rootScope,$http) {
+      $scope.resultsList = function(data) {
+          $http({
+              method: 'get',
+              url: basePath + 'results',
+              params: {user_id:$rootScope.userData.user.id}
+          }).then(function successCallback(response) {
+              $scope.results = response.data.results;
+              $scope.low = 0;
+              $scope.middle = 0;
+              $scope.high = 0;
+              angular.forEach($scope.results, function(value, key) {
+              	if(value[0].result<50)  $scope.low++;
+              	if(value[0].result>=50 && value[0].result<70)  $scope.middle++;
+              	if(value[0].result>=70)  $scope.high++;
+              });
+              $scope.pie = {
+                  labels : ["Успішність менше 50%", "Успішність 50-70%", "Усрішність більше 70%"],
+                  data : [$scope.low, $scope.middle, $scope.high]
+              };
+          }, function errorCallback(response) {
+              console.log(response);
+          });
+      };
+      $scope.resultsList();
 }]);
