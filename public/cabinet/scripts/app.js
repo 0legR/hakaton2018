@@ -405,6 +405,19 @@ angular
                                 name: 'ngTouch',
                                 files: ['bower_components/angular-touch/angular-touch.js']
                             })
+                    },
+                    loadMyFile:function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name:'chart.js',
+                            files:[
+                                'bower_components/angular-chart.js/dist/angular-chart.min.js',
+                                'bower_components/angular-chart.js/dist/angular-chart.css'
+                            ]
+                        }),
+                            $ocLazyLoad.load({
+                                name:'sbAdminApp',
+                                files:['scripts/controllers/chartContoller.js']
+                            })
                     }
                 }
             })

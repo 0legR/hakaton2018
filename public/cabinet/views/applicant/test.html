@@ -84,12 +84,12 @@
                                             <div class="form-group input-group">
                                                 <input class="form-control" ng-model="answer.name" required disabled>
                                                 <span class="input-group-addon" style="padding: 0px 10px 10px 40px;">
-                                            <input type="radio" name="answer" ng-click="setAnswer(answer)">
+                                            <input type="radio" name="answer" ng-model="answer.status" ng-click="setAnswer(answer)" required>
                                         </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-default" ng-click="sendAnswer(currentQuestion, questionIndex)" ng-disabled="questionForm.$invalid">Відправити</button>
+                                    <button type="submit" class="btn btn-default" ng-click="sendAnswer(currentQuestion, questionIndex)" ng-disabled="!selectedAnswer">Відправити</button>
                                 </form>
                             </div>
                             <!-- /.row (nested) -->
@@ -105,6 +105,16 @@
                             <div ng-show="attachCV" >
                                 <input type="file" style="display: inline-block">
                                 <button type="button" class="btn btn-primary btn-xs" style="display: inline-block" ng-click="attachCV=false">Відправити</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3" id="pie-chart" ng-controller="ApplicantCharCtrl">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Успішність</div>
+                                <div class="panel-body">
+                                    <canvas id="pie" class="chart chart-pie chart-xs" data="pie.data" labels="pie.labels"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
