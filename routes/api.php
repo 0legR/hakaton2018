@@ -25,4 +25,6 @@ Route::resource('results', 'API\ResultController', ['only' => ['index', 'store']
 Route::resource('companies', 'API\CompanyController', ['except' => ['create', 'show']]);
 Route::get('passed_result', 'API\ResultController@isUserPassedTest');
 Route::resource('orders', 'API\OrderController', ['except' => ['create', 'show']]);
+Route::resource('scores', 'API\ScoreController', ['only' => ['index']]);
+
 
