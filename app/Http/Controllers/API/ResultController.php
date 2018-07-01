@@ -44,10 +44,11 @@ class ResultController extends Controller
     {
         $userId = $user->id;
         $vacancyId = $vacancy->id;
-        if (!Score::byUserAndVacancy($userId, $vacancyId)->get()) {
+        $scores = Score::byUserAndVacancy($userId, $vacancyId)->get();
+        if ($scores->count() === 0) {
             $newScore = new Score();
             $newScore->user_name = $user->name;
-            $newScore->vacancy_name = $vacancy->vacancy_name;
+            $newScore->vacancy_name = $vacancy->name;
             $newScore->score = $score;
             $newScore->user_id = $userId;
             $newScore->vacancy_id = $vacancyId;
