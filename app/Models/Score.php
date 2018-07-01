@@ -55,6 +55,6 @@ class Score extends Model
 
     public function scopeByUserAndVacancy($query, $userId, $vacancyId)
     {
-    	return $query->where('vacancy_id', $vacancy_id)->where('user_id', $userId);
+    	return $query->where('vacancy_id', $vacancyId)->where('user_id', $userId);
     }
 }
