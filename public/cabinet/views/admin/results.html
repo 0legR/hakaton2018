@@ -11,8 +11,36 @@
             <div class="panel-heading">
                 Результати тестування
             </div>
-            В розробці....
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>Вакансія</th>
+                            <th>Користувач</th>
+                            <th style="width: 90px;">Бал</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-class="{'alert-success': item[0].result>=70 , 'alert-warning':item[0].result<70} " ng-repeat="item in results track by $index">
+                            <td>{{item[0].vacancy.name}}</td>
+                            <td>{{item[0].user.name}} ({{item[0].user.email}})</td>
+                            <td>{{item[0].result}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
             <!-- /.panel -->
+        </div>
+        <div class="col-lg-6 col-sm-12" id="pie-chart" ng-controller="ChartCtrl">
+            <div class="panel panel-default">
+                <div class="panel-heading">Pie Chart</div>
+                <div class="panel-body">
+                    <canvas id="pie" class="chart chart-pie chart-xs" data="pie.data" labels="pie.labels"></canvas>
+                </div>
+            </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>

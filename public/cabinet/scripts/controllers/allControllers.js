@@ -110,6 +110,19 @@ angular.module('sbAdminApp')
             return promise;
         };
 
+        $scope.resultsList = function(data) {
+            var promise = $http({
+                method: 'get',
+                url: basePath + 'results',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                return response.data.results?response.data.results.length:0;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            return promise;
+        };
+
         $scope.companiesList = function(data) {
             var promise = $http({
                 method: 'get',
@@ -128,11 +141,13 @@ angular.module('sbAdminApp')
             $scope.questionsList(),
             $scope.ordersList(),
             $scope.companiesList(),
+            $scope.resultsList(),
         ]).then(function (response) {
             $scope.vacanciesCount=response[0];
             $scope.questionsCount=response[1];
             $scope.ordersCount=response[2];
             $scope.companiesCount=response[3];
+            $scope.resultsCount=response[4];
         });
     }])
     .controller('adminVacanciesCtrl', ['$scope', '$http', '$state','$stateParams','$rootScope', function ($scope, $http, $state, $stateParams,$rootScope) {
@@ -253,7 +268,6 @@ angular.module('sbAdminApp')
             {name:'',status:0},
             {name:'',status:0},
             {name:'',status:0},
-            {name:'',status:0},
         ];
 
         $scope.setDefault = function(answer) {
@@ -321,7 +335,19 @@ angular.module('sbAdminApp')
         };
     }])
     .controller('adminResultCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {
-
+        $scope.resultsList = function(data) {
+            $http({
+                method: 'get',
+                url: basePath + 'results',
+                params: {user_id:$rootScope.userData.user.id}
+            }).then(function successCallback(response) {
+                console.log(response);
+                $scope.results = response.data.results;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
+        $scope.resultsList();
     }])
     // companies controller
     .controller('adminSettingsCtrl', ['$scope', '$http','$rootScope', function ($scope, $http,$rootScope) {

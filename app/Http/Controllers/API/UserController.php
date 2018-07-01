@@ -9,7 +9,7 @@ use App\User;
 class UserController extends Controller
 {
     public function store(Request $request) {
-    	$newUser = new User($request->except('_token', 'password'));
+    	$newUser = new User($request->except('_token'));
         // $newUser->password = bcrypt($request->password);
     	if ($newUser->validate()) {
     		$newUser->save();

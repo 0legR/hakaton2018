@@ -59,14 +59,14 @@
             </div>
             <div ng-show="userData.user.id">
                 <div class="form-group text-center">
-                    <h3>Вакансія: <strong>{{vacancy.name}}</strong></h3>
+                    <h3>Вакансія: <strong>{{vacancy.name}}</strong> <span style="font-size: small">(тривалість: {{vacancy.test_time}}хв.)</span></h3>
                 </div>
                 <div ng-show="!isStart && !isFinished" class="text-center start" ng-click="startTest()">
                     Почати тест <i class="fa fa-play-circle-o" aria-hidden="true"></i>
                 </div>
                 <div ng-show="isStart && !isFinished">
                     <div class="alert alert-danger" style="position: fixed;top:20px;left:20px;    z-index: 1000;">
-                        <span class="alert-link">{{counter}}</span>
+                        <span class="alert-link">{{counter}} сек.</span>
                         <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">

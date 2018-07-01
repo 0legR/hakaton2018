@@ -197,7 +197,7 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li ng-if="userData.user">
+            <li ng-if="userData.user && userData.user.isHR">
                 <a href="" ng-click="companyProfile()"><i class="fa fa-user fa-fw"></i> Company Profile</a>
             </li>
             <li ng-if="userData.user.name">
